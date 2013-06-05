@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+<channel>
+  <title>Arquillian attacks Android!</title>
+  <link>http://miklosovic.net/</link>
+  <description>blog of Stefan Miklosovic - GSoC 2013 participant </description>
+  <generator>BlazeBlogger 1.2.0</generator>
+  <item>
+    <title>Ike starts the battle!</title>
+    <link>http://miklosovic.net/2013/06/1-ike-starts-the-battle/</link>
+    <guid>http://miklosovic.net/2013/06/1-ike-starts-the-battle/</guid>
+    <pubDate>Wed, 05 Jun 2013 00:00:01 GMT</pubDate>
+    <description><![CDATA[The very first post.
+    ]]></description>
+  </item>
+</channel>
+</rss>

@@ -1,0 +1,28 @@
+[blog]
+  keywords = Arquillian Android JBoss Linux testing GSOC 2013 GSoC
+  lang = en_US
+  posts = 10
+  style = default.css
+  subtitle = blog of Stefan Miklosovic - GSoC 2013 participant 
+  theme = default.html
+  title = Arquillian attacks Android!
+[color]
+  list = true
+  log = true
+[core]
+  doctype = html
+  editor = vim
+  encoding = UTF-8
+  extension = html
+[feed]
+  baseurl = http://miklosovic.net
+  fullposts = false
+  posts = 10
+[post]
+  author = top
+  date = top
+  tags = none
+[user]
+  email = miklosovic@gmail.com
+  name = Stefan Miklosovic
+  nickname = smikloso
