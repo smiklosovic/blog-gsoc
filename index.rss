@@ -10,7 +10,24 @@
     <link>http://miklosovic.net/2013/06/1-ike-starts-the-battle/</link>
     <guid>http://miklosovic.net/2013/06/1-ike-starts-the-battle/</guid>
     <pubDate>Wed, 05 Jun 2013 00:00:01 GMT</pubDate>
-    <description><![CDATA[The very first post.
+    <description><![CDATA[<div class="sect1">
+<div class="sectionbody">
+<div class="paragraph">
+<p>My name is Stefan Miklosovic and I am participant of GSoC 2013.
+This blog is dedicated to tracking of development progress for GSoC.</p>
+</div>
+<div class="paragraph">
+<p>Source code of this blog can be found <a href="https://github.com/smiklosovic/blog-gsoc">here</a>.</p>
+</div>
+<div class="paragraph">
+<p>This GSoC will be focused on closer and better integration of <a href="http://arquillian.org/">Arquillian</a>
+with Android. There is already a lot of work done. Read more about Arquillian Android intergration in the blog post!</p>
+
+<i>This whole site is RSS ready. Just past this site (miklosovic.net) into your RSS reader and you are done.</i>
+</div>
+</div>
+</div>
+
     ]]></description>
   </item>
 </channel>

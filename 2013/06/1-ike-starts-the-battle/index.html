@@ -5,9 +5,9 @@
   <meta http-equiv="Content-Type" content="txt/html; charset=UTF-8">
   <meta name="Generator" content="BlazeBlogger 1.2.0">
   <meta name="Copyright" content="&copy; 2013 Stefan Miklosovic">
-  <meta name="Date" content="Wed Jun  5 15:04:41 2013">
+  <meta name="Date" content="Wed Jun  5 23:57:17 2013">
   <meta name="Description" content="blog description">
-  <meta name="Keywords" content="Arquillian Android JBoss Linux testing GSOC 2013 GSoC">
+  <meta name="Keywords" content="GSoC,Arquillian,Android,JBoss, Arquillian Android JBoss Linux testing GSOC 2013 GSoC">
   <link rel="stylesheet" href="../../../default.css" type="text/css">
   <link rel="alternate" href="../../../index.rss" title="RSS Feed" type="application/rss+xml">
   <title>Ike starts the battle!</title>
@@ -36,7 +36,109 @@
 <div class="information">
    <span class="date">2013-06-05</span> by <span class="author">smikloso</span>
 </div>
-The very first post.
+<div class="sect1">
+<div class="sectionbody">
+<div class="paragraph">
+<p>My name is Stefan Miklosovic and I am participant of GSoC 2013.
+This blog is dedicated to tracking of development progress for GSoC.</p>
+</div>
+<div class="paragraph">
+<p>Source code of this blog can be found <a href="https://github.com/smiklosovic/blog-gsoc">here</a>.</p>
+</div>
+<div class="paragraph">
+<p>This GSoC will be focused on closer and better integration of <a href="http://arquillian.org/">Arquillian</a>
+with Android. There is already a lot of work done. Read more about Arquillian Android intergration in the blog post!</p>
+
+<i>This whole site is RSS ready. Just past this site (miklosovic.net) into your RSS reader and you are done.</i>
+</div>
+</div>
+</div>
+
+<!-- break -->
+
+<div class="sect1">
+<h2 id="_what_is_done">What is done</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>There are already implemented (by me) these extensions regarting Android testing with Arquillian:</p>
+</div>
+<div class="ulist">
+
+<ul>
+<li>
+<p><a href="https://github.com/smiklosovic/arquillian-container-android">arquillian-android-container</a></p>
+</li>
+<li>
+<p><a href="https://github.com/smiklosovic/arquillian-container-android-drone-web">arquillian-android-drone-web</a></p>
+</li>
+<li>
+<p><a href="https://github.com/smiklosovic/arquillian-container-android-drone-native">arquillian-android-drone-native</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Arquillian Android container</strong> is the successor of <a href="https://github.com/arquillian/arquillian-extension-android">Arquillian Android Extension</a> by Karel Piwko. It recycles the functionality and adds the whole container lifecycle as for any normal Arquillian container. This container is managed but remote-like behaviour is implemented as well - meaning it is possible to connect to already running Android device (mobile phone or virtual device / emulator at computer). You are welcome to get familiar with Android container by <a href="https://github.com/smiklosovic/arquillian-container-android/blob/master/README.md">informatory summary</a> with documentation.</p>
+</div>
+<div class="paragraph">
+<p><strong>Arquillian Android drone for web testing</strong> is very simple extension which hooks to Android container and installs necessary resources from <a href="http://docs.seleniumhq.org/">Selenium</a> - to be concrete, it installs <a href="https://code.google.com/p/selenium/downloads/detail?name=android-server-2.21.0.apk">Android server APK</a> on Android device in order to be able to execute tests. In a nutshell, a user is writing tests in Arquillian Graphene / WebDriver API, these calls are translated internally into WebDriver API as REST calls and these are sent to Android device. Just installed Android server APK gets these calls and simulates user&#8217;s interaction with browser automatically. Test results are then sent back to client similarly.</p>
+</div>
+<div class="paragraph">
+<p>The demo which shows how to achieve this functional testing is implemented in kitchensink-html5-mobile demo from <a href="http://www.jboss.org/jdf/">JDF</a> <a href="https://github.com/smiklosovic/kitchensink-html5-mobile">here</a>. Feel free to explore it and realize which artifacts are used and which versions of Android server APK matches WebDriver in order to be able to execute tests.</p>
+</div>
+<div class="paragraph">
+<p>Android container is implmented in a such there can be mix of different container adapter on the classpath of the different type which was not normally possible. The typical workflow is that you deploy your web application as <code>war</code> file into application container (we are fans of <a href="https://www.jboss.org/jbossas/">JBoss AS</a> or new <a href="http://wildfly.org/">WildFly</a>) and functional tests are stored in <code>src/test</code> as normally. When we <code>mvn test</code>, application is deployed into AS and tests are executed on Android device. The best combo is to have both container already started so you just connect to them and you do not way until they are both started - saving the testing turnaroud pretty significantly. We are getting to the phase when you can develop by TDD way because of this.</p>
+</div>
+<div class="paragraph">
+<p><strong>Arquillian Android drone for native testing</strong> behaves similarly as its web counterpart but native and hybrid (web + native) applications are under test. While doing so, you have to install just your application as APK file to Android device and do testing. The trick is that native plugin uses <a href="https://github.com/DominikDary/selendroid">Selendroid</a> server and because of this, user writes tests in the WebDriver API as well since Selendroid does the very same thing as Selenium does but it translates these REST calls to internal native calls in Selendroid server which is installed upon deployment. The example how native testing can be done is located <a href="https://github.com/smiklosovic/arquillian-android-container-tests/tree/master/android-container-native-test-01">here</a>.</p>
+</div>
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_pitfalls">Pitfalls</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Right now, there is Android container fully implemented and web and native plugins are provided as well so a tester has the ammunition to test very wide range of applications. The problem is that the actual setup is, lets say it, quite paintfull, because you have to be sure that every needed bit of resource is present. The potential developer has to download Selendroid server APK when testing natively, he has to download Android server APK from Selenium when he tests web applications and the very common thing is you ends up with APKs which are not matching with version of e.g. Arquillian Graphene or WebDriver. Because of this, it takes quite a lot of time to boostrat this whole environment and there is lot of boilerplate activities which one can not avoid. This process is time consuming and developer can be disappointed and throw this way of testing into the trash which is totally not desired. Testing is the internal part of the development cycle and we just can not skip it, we <em>need</em> to test. My task is to simplify boostrapping of the tests as much as possible so testing is possible within of (couple) of seconds with clean environment.</p>
+</div>
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_people">People</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>My mentor is <a href="https://github.com/aslakknutsen">Aslak Knutsen</a>, the author and founder of Arquillian testnig platform from <a href="http://www.redhat.com/">Red Hat</a>. My mentor#2 (:-)) is <a href="https://github.com/kpiwko">Karel Piwko</a> from Red Hat as well.</p>
+</div>
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_links">Links</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="http://www.google-melange.com/gsoc/homepage/google/gsoc2013">Google Summer of Code 2013</a></p>
+</div>
+<div class="paragraph">
+<p><a href="http://arquillian.org/">Arquillian</a></p>
+</div>
+<div class="paragraph">
+<p><a href="http://www.packtpub.com/arquillian-testing-guide/book">Buy really hot &amp; new Arquillian book!</a></p>
+</div>
+<div class="paragraph">
+<p><a href="https://docs.jboss.org/author/display/ARQ/Reference+Guide">Read Arquillian reference guide</a></p>
+</div>
+<div class="paragraph">
+<p><a href="https://docs.jboss.org/author/display/ARQGRA2/Getting+Started">Read more about Graphene</a></p>
+</div>
+<div class="paragraph">
+<p><a href="https://community.jboss.org/en/arquillian?view=discussions">Don&#8217;t be shy and get involved in our lovely developer forums!</a></p>
+</div>
+<div class="paragraph">
+<p><a href="http://asciidoctor.org/">this blog is written with help of Asciidoctor</a></p>
+</div>
+
+</div>
+</div>
 
   </div>
 
@@ -53,7 +155,7 @@ The very first post.
 
     <h2>Links</h2>
     <ul>
-<li><a href="http://blaze.blackened.cz">BlazeBlogger</a></li>
+<li><a href="https://github.com/smiklosovic/blog-gsoc">This on GitHub</a></li>
     </ul>
   </div>
 
