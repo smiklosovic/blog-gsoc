@@ -22,7 +22,7 @@ with Android. There is already a lot of work done. Read more about Arquillian An
 <h2 id="_what_is_done">What is done</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>There are already implemented (by me) these extensions regarting Android testing with Arquillian:</p>
+<p>There are already implemented (by me) these extensions regarding Android testing with Arquillian:</p>
 </div>
 <div class="ulist">
 
