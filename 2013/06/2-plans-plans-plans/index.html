@@ -5,7 +5,7 @@
   <meta http-equiv="Content-Type" content="txt/html; charset=UTF-8">
   <meta name="Generator" content="BlazeBlogger 1.2.0">
   <meta name="Copyright" content="&copy; 2013 Stefan Miklosovic">
-  <meta name="Date" content="Sat Jun 15 02:50:32 2013">
+  <meta name="Date" content="Sat Jun 15 03:03:08 2013">
   <meta name="Description" content="blog description">
   <meta name="Keywords" content="Arquillian Android JBoss Linux testing GSOC 2013 GSoC">
   <link rel="stylesheet" href="../../../default.css" type="text/css">
@@ -87,7 +87,7 @@ it is not sufficient to sign only Selendroid server itself but there has to be t
 </ul>
 </div>
 <div class="paragraph">
-<p>Regarding the checkpoint for presenting the plans for GSoC itself, I have discussed the idea of Karel Piwko and Lukas Fryc about making Android container and whole testing more smooth meaning it is desired to make testing experience less cluttered and messy. There is a lot of work one has to do and lot of hurdles one has to leap in order to start to experiment with tests itself. This delay has to be made short as much as possible.</p>
+<p>Regarding the checkpoint for presenting the plans for GSoC itself, I have discussed the idea of Karel Piwko and Lukas Fryc about making Android container and whole testing more smooth meaning it is desired to make testing experience less cluttered and messy. There is a lot of work one has to do and lot of hurdles one has to leap in order to start to experiment with tests themselves. This delay has to be made short as much as possible.</p>
 </div>
 <div class="paragraph">
 <p>The very uncomfortable activity is to download all needed bits to bootstrap the testing process itself. It is needed to have APK (e.g. Android server for web testing or Selendroid server for native testing) every time on the classpath. An ordinary user does not have a clue from where he should download them not speaking about the versions &#8230; In the first phase, we are striving for having one common framework for downloading and bootstrapping everything necessary.</p>
@@ -103,7 +103,7 @@ it is not sufficient to sign only Selendroid server itself but there has to be t
 <p>The very first option is to try to locate needed APK locally. It can be search on classpath or in some specific location. The location will be taken primarily from <code>META_INF/some_conf_file</code>. When configuration is present in <code>arquillian.xml</code>, it will override information in <code>META_INF</code> configuration file. However, when the required APK is not found, even after parsing both <code>META_INF</code> and <code>arquillian.xml</code>, the funny part starts. How do we get APKs? By <a href="https://github.com/shrinkwrap/resolver">ShrinkWrap Maven Resolver</a>.</p>
 </div>
 <div class="paragraph">
-<p>Maven resolver will dynamically parse <code>G:A:V</code> from <code>META_INF</code> configuration file placed in every testing extension or any configuration file. We can specify common Maven coordinates in order to point platform extension to download it (possibly with dependencies) by Maven ShrinWrap resolver. When we fail to resolve it by Maven, we try to download it just from well know dowloading <a href="https://code.google.com/p/selenium/downloads/detail?name=android-server-2.32.0.apk">place</a>. If we fail to download it even by this way, we could teoretically proceed to download its sources and built that extension for as dynamically. We can do it since most of these projects are mavenized.</p>
+<p>Maven resolver will dynamically parse <code>G:A:V</code> from <code>META_INF</code> configuration file placed in every testing extension or any configuration file. We can specify common Maven coordinates in order to point platform extension to download it (possibly with dependencies) by Maven ShrinWrap resolver. When we fail to resolve it by Maven, we try to download it just from well know dowloading <a href="https://code.google.com/p/selenium/downloads/detail?name=android-server-2.32.0.apk">place</a>. If we fail to download it even by this way, we could teoretically proceed to download its sources and built that extension for us dynamically. We can do it since most of these projects are mavenized.</p>
 </div>
 <div class="paragraph">
 <p>After the build, these bits are stored in local repository for further use. It can be placed e.g. in <code>target</code> as well but we would like to push the idea to have it stored in Maven repository since this is so big win in a lot of directions. The whole class of problems diminish instanlty when you have Maven repository with bits available.</p>
