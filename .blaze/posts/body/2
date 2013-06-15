@@ -1,0 +1,99 @@
+<div class="sect1">
+<div class="sectionbody">
+<div class="paragraph">
+<p>In the second blog post, I would like to sum up what I have been doing lately
+regarding Arquillian container and what are issues to look at in upcomming two weeks (or so).</p>
+</div>
+</div>
+</div>
+
+<!-- break -->
+
+<div class="sect1">
+<h2 id="_improvements">Improvements</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This week was pretty about the maintenance. I was polishing <a href="https://github.com/smiklosovic/arquillian-container-android-drone-native">native plugin</a> since my coworker Tadeas Kriz realized that he has problems with signing of APKs with debug keystore.</p>
+</div>
+<div class="paragraph">
+<p>This issue was in the end not his fault but mine, I have rewritten pretty much around signing of APKs. The reason for doing this is that
+it is not sufficient to sign only Selendroid server itself but there has to be the resign of <em>aut</em> (application under test) as well. When both APKs are not signed, Android side refuses to instrument <em>aut</em> because certificates are not the same.</p>
+</div>
+<div class="paragraph">
+<p>I was updating container and both plugins for Arquillian 1.0.4.Final, no issues spotted so far.</p>
+</div>
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_what_s_next">What&#8217;s next</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>There is very big lack of documentation and it is not expected at all for people to look into the code in order to know what switches one can use. I would like to write at least some rescue asciidoc for native and web plugin with essential use cases in order to make it easier for the end user.</p>
+</div>
+<div class="paragraph">
+<p>It is needed to rename the whole container and all related modules to reflect what was <a href="https://community.jboss.org/message/818695#818695">consulted</a>. Whole Android universe of Arquillian will be named <em>Droidium</em>. There will be renaming of all packages as well. On the module level changes are:</p>
+</div>
+<div class="ulist">
+
+<ul>
+<li>
+<p>arquillian-container-android &#8594; arquillian-droidium-container</p>
+</li>
+<li>
+<p>arquillian-container-android-drone-native &#8594; arquillian-droidium-native</p>
+</li>
+<li>
+<p>arquillian-container-android-drone-native &#8594; arquillian-droidium-web</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Regarding the checkpoint for presenting the plans for GSoC itself, I have discussed the idea of Karel Piwko and Lukas Fryc about making Android container and whole testing more smooth meaning it is desired to make testing experience less cluttered and messy. There is a lot of work one has to do and lot of hurdles one has to leap in order to start to experiment with tests itself. This delay has to be made short as much as possible.</p>
+</div>
+<div class="paragraph">
+<p>The very uncomfortable activity is to download all needed bits to bootstrap the testing process itself. It is needed to have APK (e.g. Android server for web testing or Selendroid server for native testing) every time on the classpath. An ordinary user does not have a clue from where he should download them not speaking about the versions &#8230; In the first phase, we are striving for having one common framework for downloading and bootstrapping everything necessary.</p>
+</div>
+<div class="paragraph">
+<p>This functionality is going to be implemented in a standalone extension on which Droidium container will depend internally so tester does not need to add it on his own on the classpath. Let&#8217;s name this extension <em>arquillian-droidium-platform-support</em>.
+</p>
+</div>
+<div class="paragraph">
+<p>Every testing module (right now droidium-{native,web}) will have special file in its <code>META_INF</code> where will be not yet specified configuration file. Platform support module will cover the API for each extension in its configuration classes (when <code>arquillian.xml</code> is parsed) to operate on this meta configuration file, every testing extension will use platform extension API to get necessary bits (e.g. server APKs).</p>
+</div>
+<div class="paragraph">
+<p>The very first option is to try to locate needed APK locally. It can be search on classpath or in some specific location. The location will be taken primarily from <code>META_INF/some_conf_file</code>. When configuration is present in <code>arquillian.xml</code>, it will override information in <code>META_INF</code> configuration file. However, when the required APK is not found, even after parsing both <code>META_INF</code> and <code>arquillian.xml</code>, the funny part starts. How do we get APKs? By <a href="https://github.com/shrinkwrap/resolver">ShrinkWrap Maven Resolver</a>.</p>
+</div>
+<div class="paragraph">
+<p>Maven resolver will dynamically parse <code>G:A:V</code> from <code>META_INF</code> configuration file placed in every testing extension or any configuration file. We can specify common Maven coordinates in order to point platform extension to download it (possibly with dependencies) by Maven ShrinWrap resolver. When we fail to resolve it by Maven, we try to download it just from well know dowloading <a href="https://code.google.com/p/selenium/downloads/detail?name=android-server-2.32.0.apk">place</a>. If we fail to download it even by this way, we could teoretically proceed to download its sources and built that extension for as dynamically. We can do it since most of these projects are mavenized.</p>
+</div>
+<div class="paragraph">
+<p>After the build, these bits are stored in local repository for further use. It can be placed e.g. in <code>target</code> as well but we would like to push the idea to have it stored in Maven repository since this is so big win in a lot of directions. The whole class of problems diminish instanlty when you have Maven repository with bits available.</p>
+</div>
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_what_is_unknown">What is unknown?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The big unknown is configuration file in <code>META_INF</code> for every extension. It should have the same format / syntax for every extension. I would personally go for XML but json or even yaml is good as well. Will see &#8230;</p>
+</div>
+<div class="paragraph">
+<p>Next, there are unknowns about overall execution of this lifecycle and it has to be polished yet.</p>
+</div>
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_conclusion">Conclusion</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The goal is set and quite clear. I&#8217;ll try to do what I have written previously + do some basic proof of concept solution on which we can improve things. There are hand-written resources about the concept. They can be found <a href="http://miklosovic.net/paper01.pdf">here</a> and <a href="http://mikloosovic.net/paper02.pdf">here</a>.</p>
+</div>
+<div class="paragraph">
+<p><a href="http://asciidoctor.org/"><em>this blog is written with help of Asciidoctor</em></a></p>
+</div>
+
+</div>
+</div>

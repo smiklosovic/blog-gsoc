@@ -6,6 +6,22 @@
   <description>blog of Stefan Miklosovic - GSoC 2013 participant </description>
   <generator>BlazeBlogger 1.2.0</generator>
   <item>
+    <title>Plans, plans, plans ...</title>
+    <link>http://miklosovic.net/2013/06/2-plans-plans-plans/</link>
+    <guid>http://miklosovic.net/2013/06/2-plans-plans-plans/</guid>
+    <pubDate>Sat, 15 Jun 2013 00:00:01 GMT</pubDate>
+    <description><![CDATA[<div class="sect1">
+<div class="sectionbody">
+<div class="paragraph">
+<p>In the second blog post, I would like to sum up what I have been doing lately
+regarding Arquillian container and what are issues to look at in upcomming two weeks (or so).</p>
+</div>
+</div>
+</div>
+
+    ]]></description>
+  </item>
+  <item>
     <title>Ike starts the battle!</title>
     <link>http://miklosovic.net/2013/06/1-ike-starts-the-battle/</link>
     <guid>http://miklosovic.net/2013/06/1-ike-starts-the-battle/</guid>
