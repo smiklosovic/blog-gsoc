@@ -1,0 +1,10 @@
+#!/bin/bash
+
+echo "in : $1"
+echo "out: $2"
+
+asciidoctor -o $2.tmp $1
+
+perl -0777 -pe 's/<div class="paragraph">\n<p><!-- break --><\/p>\n<\/div>/<!-- break -->/igs' $2.tmp | tail -n+14 | head -n -9 > $2
+
+rm $2.tmp
