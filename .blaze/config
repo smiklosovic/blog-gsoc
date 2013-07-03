@@ -6,6 +6,7 @@
   subtitle = blog of Stefan Miklosovic - GSoC 2013 participant 
   theme = default.html
   title = Arquillian attacks Android!
+  url = http://miklosovic.net
 [color]
   list = true
   log = true

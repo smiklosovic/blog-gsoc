@@ -1,0 +1,206 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+                      "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="txt/html; charset=UTF-8">
+  <meta name="Generator" content="BlazeBlogger 1.2.0">
+  <meta name="Copyright" content="&copy; 2013 Stefan Miklosovic">
+  <meta name="Date" content="Wed Jul  3 23:44:58 2013">
+  <meta name="Description" content="blog description">
+  <meta name="Keywords" content="Arquillian Android JBoss Linux testing GSOC 2013 GSoC">
+  <link rel="stylesheet" href="../../../default.css" type="text/css">
+  <link rel="alternate" href="../../../index.rss" title="RSS Feed" type="application/rss+xml">
+  <title>Ike has new battle front</title>
+</head>
+
+<body>
+
+<div id="wrapper">
+  <div id="shadow">
+    <div id="heading">
+      <h1><a href="../../../" rel="index">Arquillian attacks Android!</a></h1>
+      blog of Stefan Miklosovic - GSoC 2013 participant 
+    </div>
+
+    <div id="menu">
+      <ul>
+<li><a href="../../../" rel="index">Home</a></li>
+
+      </ul>
+    </div>
+  </div>
+
+  <div id="content">
+
+<h2 class="post">Ike has new battle front</h2>
+<div class="information">
+   <span class="date">2013-07-03</span> by <span class="author">smikloso</span>
+</div>
+<div class="paragraph">
+<p>The third blog post regarding of Arquillian Android container has a lot of
+new stuff to mention. The last two weeks were very vivid and dynamic in
+terms of the overall project direction and cooperation options. You are
+welcome to check it all &#8230;</p>
+</div>
+<!-- break -->
+<div class="sect1">
+<h2 id="_project_got_new_name">Project got new name</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Yes, it got new name. As mentioned in the
+<a href="http://miklosovic.net/2013/06/2-plans-plans-plans/">previous</a> blog post,
+the whole project has moved to official
+<a href="https://github.com/arquillian/arquillian-droidium">Arquillian repositories</a>
+and changed its name to <strong>Arquillian Droidium</strong>. It consists of three extensions:</p>
+</div>
+<div class="ulist">
+
+<ul>
+<li>
+<p>droidium-container - implements Arquillian container lifecycle for Android devices</p>
+</li>
+<li>
+<p>droidium-native - the plugin for <em>droidium container</em> in order to be able to test <strong>native</strong> Android applications</p>
+</li>
+<li>
+<p>droidium-web - the plugin for <em>droidium container</em> in order to be able to test <strong>web</strong> applications from Android device perspective</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>From now on, the container related repositories in my own GitHub repos are considered to be obsolete.</p>
+</div>
+<div class="paragraph">
+<p>All modules got <strong>very exhaustive documentation</strong> with all configuration options which are described accordingly, lowering the effort to configure your Android device satisfying your needs.</p>
+</div>
+<div class="paragraph">
+<p>There is countless changes and improvements regarding overall formatting of the project and polishing the code. All Maven related resources are formatted very carefully to be sure the whole project follows the same formatting rules.</p>
+</div>
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_proof_of_concept_testing_projects">Proof-of-concept testing projects</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>I am sure you spotted related <code>test</code> directory in the repository. This subproject contains three
+proof-of-concept tests which presents very common usage scenarios how a developer would test
+his application, whatever application (web or native) he wants to test. You are very welcome to
+hack around the code and try it on your own.</p>
+</div>
+<div class="paragraph">
+<p>The <a href="https://github.com/arquillian/arquillian-droidium/tree/master/tests/arquillian-droidium-multiple-containers-test-01">first</a>
+project simulates basic usage of Android container together with ordinary (JBoss) AS
+container. Droidium starts them both. You have very basic starting point from where you
+could hack around Android container configuration options.</p>
+</div>
+<div class="paragraph">
+<p>The <a href="https://github.com/arquillian/arquillian-droidium/tree/master/tests/arquillian-droidium-native-test-01">second</a> project
+is very useful for those who want to bootstrap testing of native Android applications via <a href="http://dominikdary.github.io/selendroid/">Selendroid</a>. This project tests very basic registration of a user via injected WebDriver by Arquillian Drone. Native testing integrates
+more tools together. Besides know Selendroid, it uses <a href="https://docs.jboss.org/author/display/ARQ/Drone">Arquillian Drone</a> for bringing WebDriver into functional tests.</p>
+</div>
+<div class="paragraph">
+<p>The <a href="https://github.com/arquillian/arquillian-droidium/tree/master/tests/arquillian-droidium-web-test-01">third</a> project tests very basic hello-world like web application which is deployed on JBoss AS 7.1.1. It uses <a href="https://code.google.com/p/selenium/downloads/detail?name=android-server-2.32.0.apk">Android server</a> from Selenium project and good old Arquillian Graphene &amp; Drone.</p>
+</div>
+<div class="paragraph">
+<p>It is worth to mention that all projects are standalone and all necessary bits are already included in projects so it is not necessary to download anything else. All APKs of Android server and Selendroid (of version 0.4) are already bundled into the projects, minimizing your effort needed to try them all.</p>
+</div>
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_tighter_selendroid_integration">Tighter Selendroid integration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>I contacted <a href="http://www.dary.de/">Dominik Dary</a>, the guy behind Selendroid project, asking him if it was possible to bring whole Selendroid into Maven Central. Right now, it is not possible to integrate Selendroid into Arquillian Droidium so easilly since it has to be installed locally in one&#8217;s development machine every time and the tracking of changes has to be done on developer part which is totally not desired.</p>
+</div>
+<div class="paragraph">
+<p>Dominik agreed and right now Selendroid artifacts are in the pending process to be synced with Sonatype repositories.</p>
+</div>
+<div class="paragraph">
+<p>The reason for bringing Selendroid API into Arquillian Droidium is the need for integrating <code>SelendroidDriver</code> into Arquillian Droidium. Selendroid can test not only native applications but also hybrid ones - meaning projects which are native but contain web interface as well. Selendroid offers a way how to switch between these modes in one test run.</p>
+</div>
+<div class="paragraph">
+<p>I personally see a way how to integrate Selendroid into Arquillian Drone by implementing simple extension for that project. A tester would then just inject <a href="https://github.com/DominikDary/selendroid/blob/master/selendroid-client/src/main/java/io/selendroid/SelendroidDriver.java">SelendroidDriver</a> by <code>@Drone</code> annotation as he is used to inject <code>AndroidDriver</code>.</p>
+</div>
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_apk_support_for_shrinkwrap">APK support for ShrinkWrap</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>I am very excited about this project. My colleague <a href="http://www.brainwashstudio.com/index_en.html">Tadeas Kriz</a> started to hack around ShrinkWrap code in order to implement the support for APK archives. Right now, it is impossible to do any modifications to APK file itself while testing. By Tadeas' plugin, it would be possible to fully specify classes and resources necessary for tests.</p>
+</div>
+<div class="paragraph">
+<p>The biggest result of this effort is to be more closely to bringing true integration tests for Android native applications into Arquillian testing platform.</p>
+</div>
+<div class="paragraph">
+<p>From Tadeas' point of view, this problem is divided into more parts. After being able to construct APK archive as such, we are unable to install it on a device because we bundled only classes themselves but there has to be compilation process which transforms them into <code>dex</code> file which is after it swallowable by Android device. The compilation would be executed by another plugin, let&#8217;s name it <em>apk builder</em>.</p>
+</div>
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_logcat_support">Logcat support</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>We are expecting another commit regarding of support of logcat by which developer sees what Android device does internally while testing. There is the support for black and white listing of what should be logged from Android device to a console.</p>
+</div>
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_conclusion">Conclusion</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>I have to say there was not big progress regarding of mentioned platform support from the second blog post but you have to admit the changes and overall liveness of the project is quite a ride.</p>
+</div>
+<div class="paragraph">
+<p>Personally, I would like to see logcat support in the very near future. APK support is very hot as well but I humbly guess it will not be usable in the very near future and it takes some time to get more mature, of course. I am really waiting for Selendroid in Maven to move further with Selendroid driver. After the integration of Selendroid, I do not see a reason why we should not release 1.0.0.Aplha1. All issues are only feature-related. I would like to move Droidium to Arquillian core 1.1.0 as well. For the following two weeks, I would like to finally get into platform support more deeply. Stay tuned!</p>
+</div>
+
+</div>
+</div>
+<div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_shortname = 'gsoc2013-arquillian-android';
+
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+  </div>
+
+  <div id="sidebar">
+    <h2>Categories</h2>
+    <ul>
+<li><a href="../../../tags/gsoc">gsoc (3)</a></li>
+    </ul>
+
+    <h2>Archive</h2>
+    <ul>
+<li><a href="../../../2013/07">July 2013 (1)</a></li>
+<li><a href="../../../2013/06">June 2013 (2)</a></li>
+    </ul>
+
+    <h2>Links</h2>
+    <ul>
+<li><a href="https://github.com/smiklosovic/blog-gsoc">This on GitHub</a></li>
+    </ul>
+  </div>
+
+  <div id="footer">
+    Copyright &copy; 2013 Stefan Miklosovic.
+    Powered by <a href="http://blaze.blackened.cz/">BlazeBlogger</a>.
+  </div>
+</div>
+
+</body>
+</html>

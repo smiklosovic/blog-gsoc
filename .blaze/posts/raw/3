@@ -1,0 +1,73 @@
+
+The third blog post regarding of Arquillian Android container has a lot of 
+new stuff to mention. The last two weeks were very vivid and dynamic in 
+terms of the overall project direction and cooperation options. You are 
+welcome to check it all ...
+
++++<!-- break -->+++
+
+== Project got new name
+
+Yes, it got new name. As mentioned in the 
+http://miklosovic.net/2013/06/2-plans-plans-plans/[previous] blog post, 
+the whole project has moved to official 
+https://github.com/arquillian/arquillian-droidium[Arquillian repositories] 
+and changed its name to *Arquillian Droidium*. It consists of three extensions:
+
+* droidium-container - implements Arquillian container lifecycle for Android devices
+* droidium-native - the plugin for _droidium container_ in order to be able to test *native* Android applications
+* droidium-web - the plugin for _droidium container_ in order to be able to test *web* applications from Android device perspective
+
+From now on, the container related repositories in my own GitHub repos are considered to be obsolete.
+
+All modules got *very exhaustive documentation* with all configuration options which are described accordingly, lowering the effort to configure your Android device satisfying your needs.
+
+There is countless changes and improvements regarding overall formatting of the project and polishing the code. All Maven related resources are formatted very carefully to be sure the whole project follows the same formatting rules.
+
+== Proof-of-concept testing projects
+
+I am sure you spotted related +test+ directory in the repository. This subproject contains three 
+proof-of-concept tests which presents very common usage scenarios how a developer would test 
+his application, whatever application (web or native) he wants to test. You are very welcome to 
+hack around the code and try it on your own.
+
+The https://github.com/arquillian/arquillian-droidium/tree/master/tests/arquillian-droidium-multiple-containers-test-01[first] 
+project simulates basic usage of Android container together with ordinary (JBoss) AS 
+container. Droidium starts them both. You have very basic starting point from where you 
+could hack around Android container configuration options.
+
+The https://github.com/arquillian/arquillian-droidium/tree/master/tests/arquillian-droidium-native-test-01[second] project 
+is very useful for those who want to bootstrap testing of native Android applications via http://dominikdary.github.io/selendroid/[Selendroid]. This project tests very basic registration of a user via injected WebDriver by Arquillian Drone. Native testing integrates 
+more tools together. Besides know Selendroid, it uses https://docs.jboss.org/author/display/ARQ/Drone[Arquillian Drone] for bringing WebDriver into functional tests.
+
+The https://github.com/arquillian/arquillian-droidium/tree/master/tests/arquillian-droidium-web-test-01[third] project tests very basic hello-world like web application which is deployed on JBoss AS 7.1.1. It uses https://code.google.com/p/selenium/downloads/detail?name=android-server-2.32.0.apk[Android server] from Selenium project and good old Arquillian Graphene & Drone.
+
+It is worth to mention that all projects are standalone and all necessary bits are already included in projects so it is not necessary to download anything else. All APKs of Android server and Selendroid (of version 0.4) are already bundled into the projects, minimizing your effort needed to try them all.
+
+== Tighter Selendroid integration
+
+I contacted http://www.dary.de/[Dominik Dary], the guy behind Selendroid project, asking him if it was possible to bring whole Selendroid into Maven Central. Right now, it is not possible to integrate Selendroid into Arquillian Droidium so easilly since it has to be installed locally in one's development machine every time and the tracking of changes has to be done on developer part which is totally not desired.
+
+Dominik agreed and right now Selendroid artifacts are in the pending process to be synced with Sonatype repositories.
+
+The reason for bringing Selendroid API into Arquillian Droidium is the need for integrating `SelendroidDriver` into Arquillian Droidium. Selendroid can test not only native applications but also hybrid ones - meaning projects which are native but contain web interface as well. Selendroid offers a way how to switch between these modes in one test run.
+
+I personally see a way how to integrate Selendroid into Arquillian Drone by implementing simple extension for that project. A tester would then just inject https://github.com/DominikDary/selendroid/blob/master/selendroid-client/src/main/java/io/selendroid/SelendroidDriver.java[SelendroidDriver] by `@Drone` annotation as he is used to inject `AndroidDriver`.
+
+== APK support for ShrinkWrap
+
+I am very excited about this project. My colleague http://www.brainwashstudio.com/index_en.html[Tadeas Kriz] started to hack around ShrinkWrap code in order to implement the support for APK archives. Right now, it is impossible to do any modifications to APK file itself while testing. By Tadeas' plugin, it would be possible to fully specify classes and resources necessary for tests.
+
+The biggest result of this effort is to be more closely to bringing true integration tests for Android native applications into Arquillian testing platform.
+
+From Tadeas' point of view, this problem is divided into more parts. After being able to construct APK archive as such, we are unable to install it on a device because we bundled only classes themselves but there has to be compilation process which transforms them into `dex` file which is after it swallowable by Android device. The compilation would be executed by another plugin, let's name it _apk builder_.
+
+== Logcat support
+
+We are expecting another commit regarding of support of logcat by which developer sees what Android device does internally while testing. There is the support for black and white listing of what should be logged from Android device to a console.
+
+== Conclusion
+
+I have to say there was not big progress regarding of mentioned platform support from the second blog post but you have to admit the changes and overall liveness of the project is quite a ride.
+
+Personally, I would like to see logcat support in the very near future. APK support is very hot as well but I humbly guess it will not be usable in the very near future and it takes some time to get more mature, of course. I am really waiting for Selendroid in Maven to move further with Selendroid driver. After the integration of Selendroid, I do not see a reason why we should not release 1.0.0.Aplha1. All issues are only feature-related. I would like to move Droidium to Arquillian core 1.1.0 as well. For the following two weeks, I would like to finally get into platform support more deeply. Stay tuned!
