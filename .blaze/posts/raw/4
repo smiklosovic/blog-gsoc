@@ -132,7 +132,7 @@ any compromises about tests.
 
 == Arquillian without head?
 
-When I was moving this project into Cloudbees, the idea about moving all tests into cloud hit me. It would be ... awesome. Just imagine that you have Mavenized project with Droidium infrastructure and since there is Android SDK present on every slave, there is not any problem in testing directly in the cloud instead of your localhost. We can fully bootstrap out Android environment into Cloudbees so you can totally separate your development and testing machine and develop in CI way, in cloud, headlessly.
+When I was moving this project into Cloudbees, the idea about moving all tests into cloud hit me. It would be ... awesome. Just imagine that you have Mavenized project with Droidium infrastructure and since there is Android SDK present on every slave, there is not any problem in testing directly in the cloud instead of your localhost. We can fully bootstrap our Android environment in Cloudbees so you can totally separate your development and testing machine and develop in CI way, in cloud, headlessly.
 
 You could ask, why it is so good? What's the matter of testing in cloud, functionally? I want to see it! Well, you would. By mentioned screenshot extension which would put screens of your application into +target/+. Even you are in headless mode, you can take screenshots. That would not be problem. 
 
