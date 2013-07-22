@@ -68,6 +68,19 @@ useless to develop something for which there is not a usage shown. In order to h
 better idea about the overall possibilities of Droidium, there have to be p-o-c projects 
 which just works, which are heavily commented and which are totally without errors of any kind.
 
+== APKs communicate together?
+
+It should be possible. Imagine a situation you have two applications. Some application 
+is sending some event to another one or there is some service you need to test as well 
+but it is in the different application from the Android point of view. You could 
+install not only on application but both of them in one test run. Now, every Selendroid server 
+is repackaged and resigned accordingly in order to be able to instrument that application under test 
+by Selendroid. But you do not need to instrument both of them. You need to instrument 
+only the one you are going to interact with manually, your service just needs to be installed.
+
+There has to be some possibility to say that some application will be instrumented and some 
+will be just installed and not treated by Selendroid.
+
 == ShrinkWrap APK builder
 
 As said the last time, I was very excited about the extension into ShrinkWrap by which you 

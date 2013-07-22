@@ -87,6 +87,25 @@ which just works, which are heavily commented and which are totally without erro
 </div>
 </div>
 <div class="sect1">
+<h2 id="_apks_communicate_together">APKs communicate together?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>It should be possible. Imagine a situation you have two applications. Some application
+is sending some event to another one or there is some service you need to test as well
+but it is in the different application from the Android point of view. You could
+install not only on application but both of them in one test run. Now, every Selendroid server
+is repackaged and resigned accordingly in order to be able to instrument that application under test
+by Selendroid. But you do not need to instrument both of them. You need to instrument
+only the one you are going to interact with manually, your service just needs to be installed.</p>
+</div>
+<div class="paragraph">
+<p>There has to be some possibility to say that some application will be instrumented and some
+will be just installed and not treated by Selendroid.</p>
+</div>
+
+</div>
+</div>
+<div class="sect1">
 <h2 id="_shrinkwrap_apk_builder">ShrinkWrap APK builder</h2>
 <div class="sectionbody">
 <div class="paragraph">
