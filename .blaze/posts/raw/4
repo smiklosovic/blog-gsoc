@@ -125,7 +125,7 @@ You could ask, why it is so good? What's the matter of testing in cloud, functio
 
 Once true native integration testing will be added, you would not be so interested into seeing what you are testing. You would be interested only into testing results themselves - making headless mode of testing even more needed.
 
-By the way, all tests in +test/+ support headless testing out of box, by triggering +-Pheadless+ profile.
+By the way, all tests in +tests/+ support headless testing out of box, by triggering +-Pheadless+ profile.
 
 == About the code
 
