@@ -186,7 +186,7 @@ any compromises about tests.</p>
 <div class="paragraph">
 <p>It is useless to say how much was done internally. Dozens of commits really. POMs of Maven are refactored as never before.
 Site generation is added, Javadoc support is added as well. Errors and warnings while building the project are eliminated and so on.
-Personally, I am satisfied with the code standards and policies why are trying to follow, e.g. project is not buildable when you are
+Personally, I am satisfied with the code standards and policies we are trying to follow, e.g. project is not buildable when you are
 not following specified <a href="https://github.com/jboss/ide-config">code standards</a>.</p>
 </div>
 

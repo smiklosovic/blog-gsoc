@@ -131,7 +131,7 @@ By the way, all tests in +test/+ support headless testing out of box, by trigger
 
 It is useless to say how much was done internally. Dozens of commits really. POMs of Maven are refactored as never before. 
 Site generation is added, Javadoc support is added as well. Errors and warnings while building the project are eliminated and so on. 
-Personally, I am satisfied with the code standards and policies why are trying to follow, e.g. project is not buildable when you are 
+Personally, I am satisfied with the code standards and policies we are trying to follow, e.g. project is not buildable when you are 
 not following specified https://github.com/jboss/ide-config[code standards]. 
 
 == Notorious absence of platform support
