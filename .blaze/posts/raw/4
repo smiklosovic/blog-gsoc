@@ -84,7 +84,7 @@ will be just installed and not treated by Selendroid.
 == ShrinkWrap APK builder
 
 As said the last time, I was very excited about the extension into ShrinkWrap by which you 
-can assemply your own Android APK deployment for your Android device. This concept follows 
+can assembly your own Android APK deployment for your Android device. This concept follows 
 the way of ordinary ShrinkWrap deployments as JavaArchive or WebArchive. You just construct 
 your own APK.
 
