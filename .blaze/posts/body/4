@@ -69,7 +69,7 @@ you can use two emulators in once test run. Quite nice, isn&#8217;t it?</p>
 By saying <em>hybrid</em>, we mean the application which is native but which has some web view
 embedded into the application (activity) itself. When you are testing such scenario,
 Selendroid has a capability to do so, you just have to <em>switch</em> between native and
-web view <em>mode</em>. This switching is show there in its entirety.</p>
+web view <em>mode</em>. This switching is shown there in its entirety.</p>
 </div>
 <div class="paragraph">
 <p>The third and the last new test is into native testing as well, it just uses Selendroid
@@ -93,7 +93,7 @@ which just works, which are heavily commented and which are totally without erro
 <p>It should be possible. Imagine a situation you have two applications. Some application
 is sending some event to another one or there is some service you need to test as well
 but it is in the different application from the Android point of view. You could
-install not only on application but both of them in one test run. Now, every Selendroid server
+install not only one application but both of them in one test run. Now, every Selendroid server
 is repackaged and resigned accordingly in order to be able to instrument that application under test
 by Selendroid. But you do not need to instrument both of them. You need to instrument
 only the one you are going to interact with manually, your service just needs to be installed.</p>
@@ -218,7 +218,7 @@ not following specified <a href="https://github.com/jboss/ide-config">code stand
 <p>Yeah I know &#8230; postponed platform support again. Well, I really think it is necessary but there is so much to do I just do not have time to even start to design some API or to go deeper into it. I was spending very much time with documentation, test projects, Selendroid integration and general hacking around the code, not even speaking about APK support. It seems this project is a long run and some things can not be hurried.</p>
 </div>
 <div class="paragraph">
-<p>There are more important things to do and unless these will not be resolved, it is nonsens to move forward. I am saying about the porting to Arquillian Core 1.1.0.Final for which there is inconsistency with ShrinkWrap implementation in our code which has to be resolved. Integration of APK support has to be done, some proof of concept screenshooter should be implemented as well. It is not <em>so much</em> necessary to implement plaform support right now and I am not saying it will not be done, it will, but right now, it is out of range.</p>
+<p>There are more important things to do and unless these will not be resolved, it is nonsens to move forward. I am saying about the porting to Arquillian Core 1.1.0.Final for which there is inconsistency with ShrinkWrap implementation in our code which has to be resolved. Integration of APK support has to be done, some proof of concept screenshooter should be implemented as well. It is not <em>so much</em> necessary to implement plaform support right now and I am not saying it will not be done, it will, but right now, it is out of range. Regarding operating system, we are developing on Linux boxes and from time to time on Macs but there is no guarantee everything works smoothly, not speaking about Windows. I would like to try it on these platforms as well and make it compatible with everything. Even it is Java, there are always some <em>ifs</em> &#8230;</p>
 </div>
 
 </div>
