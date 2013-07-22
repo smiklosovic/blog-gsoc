@@ -1,0 +1,141 @@
+In the fourth blog regarding Arquillian Droidium, I will summarize the 
+overall situation, results of the previous blog post will be discussed 
+and plans into the future will be given.
+
++++<!-- break -->+++
+
+== Droidium speaks Selendroid
+
+In the previous blog, I was writing about the possibility of adding
+Selendroid support into Arquillian Droidium by implementing simple 
+Arquillian Drone extension for _droidium-native_ plugin. I did as I 
+said and the resulting extension is incorporated into native plugin.
+
+From now on, you can use SelendroidDriver from Selendroid project. 
+I am very happy that Dominik Dary agreed and pushed Selendroid 
+artifacts into Maven Central so Droidium can use these bits very 
+conveniently. Selendroid integration can be found in 
+_droidium-native_ project in http://bit.ly/159Zj9J[selendroid driver] 
+extension.
+
+From my point of view, Selendroid is nice piece of software but 
+since we have totally different (and better and 
+more robust) Android device management, we are taking only
+Selendroid server from this project, nothing more. For example, 
+by having Arquillian Droidium, we can totally avoid using of 
+Selendroid standalone. Selendroid driver is implemented only 
+for compatibility issues and a tester can fully use it 
+from now on, however there is also WebDriver from Selenium 
+which can provide as good as Selendroid does. Personally, 
+I am glad there is direct support of it in Droidium now so 
+we can support Selendroid driver as well.
+
+== New functional tests
+
+I was trying really hard to write more functional tests, which are placed 
+https://github.com/arquillian/arquillian-droidium/tree/master/tests[here].
+
+There are three new tests which are showing possibilities of Arquillian 
+Droidium testing. Right now, we have covered almost all testing scenarios.
+
+The first test which is new is the second http://bit.ly/13PSOom[multiple container test].
+In that demo, the way how to use two Android emulators in one test run is shown. To be 
+more concrete, lets say you have started two emulators. One of version 4.1.2 and the 
+second one of version 4.2. You execute these tests and since you have two emulators 
+up and running prior to test execution, Arquillian Droidium connects to the first 
+one, execute tests and after that it is connected to the second one and tests are 
+executed there.
+
+You could say that this is not necessary and you are right :) You would just 
+use simple system property where you would specify name of the emulator you 
+want to test on and you would execute the whole test twice from the Maven point of view.
+In this case, you are executing test only once but Droidium takes care of everything so 
+you can use two emulators in once test run. Quite nice, isn't it?
+
+The second new test added to the testing showcase is http://bit.ly/12WG0Bc[hybrid test].
+By saying _hybrid_, we mean the application which is native but which has some web view 
+embedded into the application (activity) itself. When you are testing such scenario, 
+Selendroid has a capability to do so, you just have to _switch_ between native and 
+web view _mode_. This switching is show there in its entirety.
+
+The third and the last new test is into native testing as well, it just uses Selendroid 
+driver instead of WebDriver as used in the first test of this edition. It can be found 
+http://bit.ly/12G3HtS[here].
+
+I believe that making of these demo testing projects is very important not just for me 
+as a developer but also for people who want to start with this tool. It would be quite 
+useless to develop something for which there is not a usage shown. In order to have 
+better idea about the overall possibilities of Droidium, there have to be p-o-c projects 
+which just works, which are heavily commented and which are totally without errors of any kind.
+
+== ShrinkWrap APK builder
+
+As said the last time, I was very excited about the extension into ShrinkWrap by which you 
+can assemply your own Android APK deployment for your Android device. This concept follows 
+the way of ordinary ShrinkWrap deployments as JavaArchive or WebArchive. You just construct 
+your own APK.
+
+The creation of custom APK deployment is divided into two parts. The first solves a problem 
+of the construction of APK package as such - https://github.com/TadeasKriz/shrinkwrap-android[ShrinkWrap Android].
+By this extension for ShrinkWrap, you can construct your APK just as you normally construct WARs, for instance.
+
+When you construct an APK as such, that is not enough in order to install it in Android emulator. You have 
+to compile classes firstly. Since we are on Android, you have to compile them into _dex_. This is solved 
+by the second project - https://github.com/TadeasKriz/apkbuilder[APK builder].
+
+There is very detailed documentation provided (as usually) so you have very clear idea from where to start and how to 
+hack around.
+
+Both extensions will be integrated into Droidium container implementation as dependecies so tester can 
+use this way of constructing his deployments but he does not have to. The possibility is just there ...
+Wait closer integration.
+
+== Logcat support added
+
+Support for logcat output from Android device into tester's console is implemented! From now on, you have 
+various possibilities how to get log messages from Android device written into your console directly. There is very 
+convenient way how to log just what you are interested into (levels and packages) so you have very good 
+overall information about what your Android device is doing while tests are being carried out. Check out the 
+http://bit.ly/18tZpu4[documentation] to know more!
+
+== What about screenshots?
+
+I would be very interested in seeing some extension which is able to take screenshots of Android device. The problem is little bit 
+bigger. There is plethora of ways how to take screenshots but everybody does it differently. WebDriver, SelendroidDriver, existing https://github.com/arquillian/arquillian-extension-screenrecorder[screenrecorder extension].
+
+It is a complete mess.
+
+I would imagine _one good API_ tailored for Arquillian which would all extensions implement. So when you are testing Androids, you need Android device injected - it would be implemented in the separate extension. WebDriver or SelendroidDriver would do it the same (but different :)) way.
+
+We had some discussion about how to take screenshots of WebDriver family of drivers more intelligently. Imagine that you would just put that extension on your classpath and your screenshot would be taken _automatically_ before every +driver.click()+ method. There is specified set of such functions which are changing state of your application from the visual / functional point of view. You would take screenshot upon every such method invocation. Technically, we know it is doable. Who will code it? :)
+
+== Project is backed by Cloudbees
+
+Droidium has its own Cloudbees https://arquillian.ci.cloudbees.com/view/Extensions/job/Arquillian-Extension-Droidium/15/[job]. I am very excited we are not only building it but it is tested as well. By saying 
+_tested_, it is important to realize that there are tests which depends on Android SDK being present on the testing machine. We are 
+very lucky that every Cloudbees slave provides Android SDK (by default installed in /opt/android/). We can fully use 
+underlying capabilities of Cloudbees slaves to start emulators which are used while building Droidium. We do not make 
+any compromises about tests. 
+
+== Arquillian without head?
+
+When I was moving this project into Cloudbees, the idea about moving all tests into cloud hit me. It would be ... awesome. Just imagine that you have Mavenized project with Droidium infrastructure and since there is Android SDK present on every slave, there is not any problem in testing directly in the cloud instead of your localhost. We can fully bootstrap out Android environment into Cloudbees so you can totally separate your development and testing machine and develop in CI way, in cloud, headlessly.
+
+You could ask, why it is so good? What's the matter of testing in cloud, functionally? I want to see it! Well, you would. By mentioned screenshot extension which would put screens of your application into +target/+. Even you are in headless mode, you can take screenshots. That would not be problem. 
+
+Once true native integration testing will be added, you would not be so interested into seeing what you are testing. You would be interested only into testing results themselves - making headless mode of testing even more needed.
+
+By the way, all tests in +test/+ support headless testing out of box, by triggering +-Pheadless+ profile.
+
+== About the code
+
+It is useless to say how much was done internally. Dozens of commits really. POMs of Maven are refactored as never before. 
+Site generation is added, Javadoc support is added as well. Errors and warnings while building the project are eliminated and so on. 
+Personally, I am satisfied with the code standards and policies why are trying to follow, e.g. project is not buildable when you are 
+not following specified https://github.com/jboss/ide-config[code standards]. 
+
+== Notorious absence of platform support
+
+Yeah I know ... postponed platform support again. Well, I really think it is necessary but there is so much to do I just do not have time to even start to design some API or to go deeper into it. I was spending very much time with documentation, test projects, Selendroid integration and general hacking around the code, not even speaking about APK support. It seems this project is a long run and some things can not be hurried.
+
+There are more important things to do and unless these will not be resolved, it is nonsens to move forward. I am saying about the porting to Arquillian Core 1.1.0.Final for which there is inconsistency with ShrinkWrap implementation in our code which has to be resolved. Integration of APK support has to be done, some proof of concept screenshooter should be implemented as well. It is not _so much_ necessary to implement plaform support right now and I am not saying it will not be done, it will, but right now, it is out of range.

@@ -1,0 +1,286 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+                      "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="txt/html; charset=UTF-8">
+  <meta name="Generator" content="BlazeBlogger 1.2.0">
+  <meta name="Copyright" content="&copy; 2013 Stefan Miklosovic">
+  <meta name="Date" content="Mon Jul 22 02:46:23 2013">
+  <meta name="Description" content="blog description">
+  <meta name="Keywords" content="Arquillian Android JBoss Linux testing GSOC 2013 GSoC">
+  <link rel="stylesheet" href="../../../default.css" type="text/css">
+  <link rel="alternate" href="../../../index.rss" title="RSS Feed" type="application/rss+xml">
+  <title>Moving forward</title>
+</head>
+
+<body>
+
+<div id="wrapper">
+  <div id="shadow">
+    <div id="heading">
+      <h1><a href="../../../" rel="index">Arquillian attacks Android!</a></h1>
+      blog of Stefan Miklosovic - GSoC 2013 participant 
+    </div>
+
+    <div id="menu">
+      <ul>
+<li><a href="../../../" rel="index">Home</a></li>
+
+      </ul>
+    </div>
+  </div>
+
+  <div id="content">
+
+<h2 class="post">Moving forward</h2>
+<div class="information">
+   <span class="date">2013-07-22</span> by <span class="author">smikloso</span>
+</div>
+<div class="paragraph">
+<p>In the fourth blog regarding Arquillian Droidium, I will summarize the
+overall situation, results of the previous blog post will be discussed
+and plans into the future will be given.</p>
+</div>
+<!-- break -->
+<div class="sect1">
+<h2 id="_droidium_speaks_selendroid">Droidium speaks Selendroid</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In the previous blog, I was writing about the possibility of adding
+Selendroid support into Arquillian Droidium by implementing simple
+Arquillian Drone extension for <em>droidium-native</em> plugin. I did as I
+said and the resulting extension is incorporated into native plugin.</p>
+</div>
+<div class="paragraph">
+<p>From now on, you can use SelendroidDriver from Selendroid project.
+I am very happy that Dominik Dary agreed and pushed Selendroid
+artifacts into Maven Central so Droidium can use these bits very
+conveniently. Selendroid integration can be found in
+<em>droidium-native</em> project in <a href="http://bit.ly/159Zj9J">selendroid driver</a>
+extension.</p>
+</div>
+<div class="paragraph">
+<p>From my point of view, Selendroid is nice piece of software but
+since we have totally different (and better and
+more robust) Android device management, we are taking only
+Selendroid server from this project, nothing more. For example,
+by having Arquillian Droidium, we can totally avoid using of
+Selendroid standalone. Selendroid driver is implemented only
+for compatibility issues and a tester can fully use it
+from now on, however there is also WebDriver from Selenium
+which can provide as good as Selendroid does. Personally,
+I am glad there is direct support of it in Droidium now so
+we can support Selendroid driver as well.</p>
+</div>
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_new_functional_tests">New functional tests</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>I was trying really hard to write more functional tests, which are placed
+<a href="https://github.com/arquillian/arquillian-droidium/tree/master/tests">here</a>.</p>
+</div>
+<div class="paragraph">
+<p>There are three new tests which are showing possibilities of Arquillian
+Droidium testing. Right now, we have covered almost all testing scenarios.</p>
+</div>
+<div class="paragraph">
+<p>The first test which is new is the second <a href="http://bit.ly/13PSOom">multiple container test</a>.
+In that demo, the way how to use two Android emulators in one test run is shown. To be
+more concrete, lets say you have started two emulators. One of version 4.1.2 and the
+second one of version 4.2. You execute these tests and since you have two emulators
+up and running prior to test execution, Arquillian Droidium connects to the first
+one, execute tests and after that it is connected to the second one and tests are
+executed there.</p>
+</div>
+<div class="paragraph">
+<p>You could say that this is not necessary and you are right :) You would just
+use simple system property where you would specify name of the emulator you
+want to test on and you would execute the whole test twice from the Maven point of view.
+In this case, you are executing test only once but Droidium takes care of everything so
+you can use two emulators in once test run. Quite nice, isn&#8217;t it?</p>
+</div>
+<div class="paragraph">
+<p>The second new test added to the testing showcase is <a href="http://bit.ly/12WG0Bc">hybrid test</a>.
+By saying <em>hybrid</em>, we mean the application which is native but which has some web view
+embedded into the application (activity) itself. When you are testing such scenario,
+Selendroid has a capability to do so, you just have to <em>switch</em> between native and
+web view <em>mode</em>. This switching is show there in its entirety.</p>
+</div>
+<div class="paragraph">
+<p>The third and the last new test is into native testing as well, it just uses Selendroid
+driver instead of WebDriver as used in the first test of this edition. It can be found
+<a href="http://bit.ly/12G3HtS">here</a>.</p>
+</div>
+<div class="paragraph">
+<p>I believe that making of these demo testing projects is very important not just for me
+as a developer but also for people who want to start with this tool. It would be quite
+useless to develop something for which there is not a usage shown. In order to have
+better idea about the overall possibilities of Droidium, there have to be p-o-c projects
+which just works, which are heavily commented and which are totally without errors of any kind.</p>
+</div>
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_shrinkwrap_apk_builder">ShrinkWrap APK builder</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>As said the last time, I was very excited about the extension into ShrinkWrap by which you
+can assemply your own Android APK deployment for your Android device. This concept follows
+the way of ordinary ShrinkWrap deployments as JavaArchive or WebArchive. You just construct
+your own APK.</p>
+</div>
+<div class="paragraph">
+<p>The creation of custom APK deployment is divided into two parts. The first solves a problem
+of the construction of APK package as such - <a href="https://github.com/TadeasKriz/shrinkwrap-android">ShrinkWrap Android</a>.
+By this extension for ShrinkWrap, you can construct your APK just as you normally construct WARs, for instance.</p>
+</div>
+<div class="paragraph">
+<p>When you construct an APK as such, that is not enough in order to install it in Android emulator. You have
+to compile classes firstly. Since we are on Android, you have to compile them into <em>dex</em>. This is solved
+by the second project - <a href="https://github.com/TadeasKriz/apkbuilder">APK builder</a>.</p>
+</div>
+<div class="paragraph">
+<p>There is very detailed documentation provided (as usually) so you have very clear idea from where to start and how to
+hack around.</p>
+</div>
+<div class="paragraph">
+<p>Both extensions will be integrated into Droidium container implementation as dependecies so tester can
+use this way of constructing his deployments but he does not have to. The possibility is just there &#8230;
+Wait closer integration.</p>
+</div>
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_logcat_support_added">Logcat support added</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Support for logcat output from Android device into tester&#8217;s console is implemented! From now on, you have
+various possibilities how to get log messages from Android device written into your console directly. There is very
+convenient way how to log just what you are interested into (levels and packages) so you have very good
+overall information about what your Android device is doing while tests are being carried out. Check out the
+<a href="http://bit.ly/18tZpu4">documentation</a> to know more!</p>
+</div>
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_what_about_screenshots">What about screenshots?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>I would be very interested in seeing some extension which is able to take screenshots of Android device. The problem is little bit
+bigger. There is plethora of ways how to take screenshots but everybody does it differently. WebDriver, SelendroidDriver, existing <a href="https://github.com/arquillian/arquillian-extension-screenrecorder">screenrecorder extension</a>.</p>
+</div>
+<div class="paragraph">
+<p>It is a complete mess.</p>
+</div>
+<div class="paragraph">
+<p>I would imagine <em>one good API</em> tailored for Arquillian which would all extensions implement. So when you are testing Androids, you need Android device injected - it would be implemented in the separate extension. WebDriver or SelendroidDriver would do it the same (but different :)) way.</p>
+</div>
+<div class="paragraph">
+<p>We had some discussion about how to take screenshots of WebDriver family of drivers more intelligently. Imagine that you would just put that extension on your classpath and your screenshot would be taken <em>automatically</em> before every <code>driver.click()</code> method. There is specified set of such functions which are changing state of your application from the visual / functional point of view. You would take screenshot upon every such method invocation. Technically, we know it is doable. Who will code it? :)</p>
+</div>
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_project_is_backed_by_cloudbees">Project is backed by Cloudbees</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Droidium has its own Cloudbees <a href="https://arquillian.ci.cloudbees.com/view/Extensions/job/Arquillian-Extension-Droidium/15/">job</a>. I am very excited we are not only building it but it is tested as well. By saying
+<em>tested</em>, it is important to realize that there are tests which depends on Android SDK being present on the testing machine. We are
+very lucky that every Cloudbees slave provides Android SDK (by default installed in /opt/android/). We can fully use
+underlying capabilities of Cloudbees slaves to start emulators which are used while building Droidium. We do not make
+any compromises about tests.</p>
+</div>
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_arquillian_without_head">Arquillian without head?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>When I was moving this project into Cloudbees, the idea about moving all tests into cloud hit me. It would be &#8230; awesome. Just imagine that you have Mavenized project with Droidium infrastructure and since there is Android SDK present on every slave, there is not any problem in testing directly in the cloud instead of your localhost. We can fully bootstrap out Android environment into Cloudbees so you can totally separate your development and testing machine and develop in CI way, in cloud, headlessly.</p>
+</div>
+<div class="paragraph">
+<p>You could ask, why it is so good? What&#8217;s the matter of testing in cloud, functionally? I want to see it! Well, you would. By mentioned screenshot extension which would put screens of your application into <code>target/</code>. Even you are in headless mode, you can take screenshots. That would not be problem.</p>
+</div>
+<div class="paragraph">
+<p>Once true native integration testing will be added, you would not be so interested into seeing what you are testing. You would be interested only into testing results themselves - making headless mode of testing even more needed.</p>
+</div>
+<div class="paragraph">
+<p>By the way, all tests in <code>test/</code> support headless testing out of box, by triggering <code>-Pheadless</code> profile.</p>
+</div>
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_about_the_code">About the code</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>It is useless to say how much was done internally. Dozens of commits really. POMs of Maven are refactored as never before.
+Site generation is added, Javadoc support is added as well. Errors and warnings while building the project are eliminated and so on.
+Personally, I am satisfied with the code standards and policies why are trying to follow, e.g. project is not buildable when you are
+not following specified <a href="https://github.com/jboss/ide-config">code standards</a>.</p>
+</div>
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_notorious_absence_of_platform_support">Notorious absence of platform support</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Yeah I know &#8230; postponed platform support again. Well, I really think it is necessary but there is so much to do I just do not have time to even start to design some API or to go deeper into it. I was spending very much time with documentation, test projects, Selendroid integration and general hacking around the code, not even speaking about APK support. It seems this project is a long run and some things can not be hurried.</p>
+</div>
+<div class="paragraph">
+<p>There are more important things to do and unless these will not be resolved, it is nonsens to move forward. I am saying about the porting to Arquillian Core 1.1.0.Final for which there is inconsistency with ShrinkWrap implementation in our code which has to be resolved. Integration of APK support has to be done, some proof of concept screenshooter should be implemented as well. It is not <em>so much</em> necessary to implement plaform support right now and I am not saying it will not be done, it will, but right now, it is out of range.</p>
+</div>
+
+</div>
+</div>
+<div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_shortname = 'gsoc2013-arquillian-android';
+
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+  </div>
+
+  <div id="sidebar">
+    <h2>Categories</h2>
+    <ul>
+<li><a href="../../../tags/gsoc">gsoc (4)</a></li>
+    </ul>
+
+    <h2>Archive</h2>
+    <ul>
+<li><a href="../../../2013/07">July 2013 (2)</a></li>
+<li><a href="../../../2013/06">June 2013 (2)</a></li>
+    </ul>
+
+    <h2>Links</h2>
+    <ul>
+<li><a href="https://github.com/smiklosovic/blog-gsoc">This on GitHub</a></li>
+    </ul>
+  </div>
+
+  <div id="footer">
+    Copyright &copy; 2013 Stefan Miklosovic.
+    Powered by <a href="http://blaze.blackened.cz/">BlazeBlogger</a>.
+  </div>
+</div>
+
+</body>
+</html>
