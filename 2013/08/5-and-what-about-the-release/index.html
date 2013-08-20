@@ -1,0 +1,175 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+                      "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="txt/html; charset=UTF-8">
+  <meta name="Generator" content="BlazeBlogger 1.2.0">
+  <meta name="Copyright" content="&copy; 2013 Stefan Miklosovic">
+  <meta name="Date" content="Tue Aug 20 11:24:15 2013">
+  <meta name="Description" content="blog description">
+  <meta name="Keywords" content="Arquillian Android JBoss Linux testing GSOC 2013 GSoC">
+  <link rel="stylesheet" href="../../../default.css" type="text/css">
+  <link rel="alternate" href="../../../index.rss" title="RSS Feed" type="application/rss+xml">
+  <title>And what about the release?</title>
+</head>
+
+<body>
+
+<div id="wrapper">
+  <div id="shadow">
+    <div id="heading">
+      <h1><a href="../../../" rel="index">Arquillian attacks Android!</a></h1>
+      blog of Stefan Miklosovic - GSoC 2013 participant 
+    </div>
+
+    <div id="menu">
+      <ul>
+<li><a href="../../../" rel="index">Home</a></li>
+
+      </ul>
+    </div>
+  </div>
+
+  <div id="content">
+
+<h2 class="post">And what about the release?</h2>
+<div class="information">
+   <span class="date">2013-08-20</span> by <span class="author">Stefan Miklosovic</span>
+</div>
+<div class="paragraph">
+<p>This is the fifth one!</p>
+</div>
+<!-- break -->
+<div class="sect1">
+<h2 id="_multiple_deployment">Multiple deployment</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This is the big issue for Droidium. <a href="http://miklosovic.net/2013/07/4-moving-forward/">Lastly</a>, I wrote about the possibility to be able to deploy more than more @Deployment. This is quite useful scenario when you need to get some libraries (in context of Android, not ShrinkWrap) along the test itself. You have the possibility to install some service packages as well. You just need to tell Droidium which @Deployment will be instrumented by @Instrumentable annotation placed on the deployment method. You can test multiple deployments on this <a href="https://github.com/arquillian/arquillian-droidium/tree/master/tests/arquillian-droidium-multiple-deployments-test-01">demo</a>. I am personally quite satisfied with the test coverage of the multiple deployment feature and after writing that I am quite confident in the event model of Arquillian itself.</p>
+</div>
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_archetypes">Archetypes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>I coded some very basic tests as archetypes a user can get generated in order to bootstrap his mobile testing experience. Archetypes are covering native and web testing scenarios as well. All is bundled in archetypes themselves so just generate that and you are done! Archetypes can be found <a href="https://github.com/arquillian/arquillian-droidium/tree/master/archetypes">here</a>.</p>
+</div>
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_headless_mode">Headless mode</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>I am seeing a lot of possibilities in the headless testing. You could fully use the power of Maven and Arquillian (Droidium) to test your mobile applications in headless mode in a cloud, even doing functional testing. Right now it is possible to test headlessly without the issues (via -Pheadless profile in all tests in test/ dir) but <a href="http://stackoverflow.com/questions/17730316/android-screenshot-in-headless-mode-is-ugly/17754578">this one</a> reported by me. Screenshots are ugly so you can not take screenshots so conveniently to keep track of what was tested and how when doing it headlessly. It seems it is a bug.</p>
+</div>
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_apk_builder">APK builder</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This project is postponed for a while. The guy behind this is my colleague Tadeas Kriz who has more important things to do right now and I heard there are some problems with Android APK integration with ShrinkWrap (problems on Android side) which are pending to be resolved. This one seems to be more time consuming than it appeared, regretfully.</p>
+</div>
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_arquillian_and_jboss_forge">Arquillian and JBoss Forge</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>I was hacking around JBoss Forge for a while and that resulted in the <a href="https://github.com/jerr/jbossforge-plugin-arquillian-extension/pull/2/commits">merged</a> Arquillian Droidium extension for Arquillian Forge. The native and web plugin <a href="https://github.com/jerr/jbossforge-plugin-arquillian-extension/pull/2">got merged</a>, I did PR about container itself as well but it seems <a href="http://github.com/forge/plugin-arquillian/pull/30">nobody cares</a> :). It is more likely it gets passed once container itself is in Maven Central. I have to say it does not make much sense to have it there when you have to build that container locally on your own.</p>
+</div>
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_screenshooter">Screenshooter</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>There were plans to do some unified screenshooter for Arquillian but it seems to me this topic is out of scope right now and it is not actually so needed. Screenshooter for Droidium is implemented as a standalone Arquillian resource injected into the test which is bound to Android device instance. Screenshooter can take images of various image formats and they can be put in arbitrary directories under chosen names. That is pretty all what is needed to take it conveniently according to your needs. Check it <a href="https://github.com/arquillian/arquillian-droidium/tree/master/tests/arquillian-droidium-screenshooter-test-01">here</a>!</p>
+</div>
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_event_model">Event model</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In order to provide easier entry point for beginners, I created simple event model images which keep track of what is going on behind the curtains. These are placed <a href="http://github.com/arquillian/arquillian-droidium/tree/master/resources">here</a>.</p>
+</div>
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_releasing_droidium_bits">Releasing Droidium bits</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>There is <a href="https://issues.jboss.org/browse/MP-74">the JIRA task</a> to release Droidium 1.0.0.Alpha1 this week but we are forced to postpone it for a while. The reason behind this is that Selendroid server of version 0.5.0 will be released in two weeks and I would love to base Droidium on it since, according to Dominik Dary from Selendroid team, it will be more stable and feature complete from testing point of view and it would be nice just to wait.</p>
+</div>
+<div class="paragraph">
+<p>Another bug is related to Android ddmlib from Google. I found <a href="https://code.google.com/p/android/issues/detail?id=58424">the regression</a> which I submitted. This one was confirmed and repaired in the upstream and it will be present in the next version of ddmlib. The 1.0.0.Alpha1 should use the new version of ddmlib library without this issue.</p>
+</div>
+<div class="paragraph">
+<p>More importantly, while figuring out the multiple deployment support, I submitted <a href="https://github.com/DominikDary/selendroid/pull/90">the PR</a> which will be included in 0.5.0 enabling multiple instrumentation, theoretically. Up to this point, it was only possible to hook Selendroid server to one port, 8080, so another server was blocked from the operating. Right now you can choose your port on Android device side arbitrarily so more than one application could get instrumented. The logic behind this is deadly simple. When you have multiple deployments, you need to say which one of them will be instrumented while another will be just installed, serving as a service or resource package as a dependency. This is done with @Instrumentable. When you have multiple instrumentations, you have to somehow recognize which application will be instrumented by which Selendroid server, shifting this problem one level up. The preliminear answer to this is that it will be done via configuration you pass to that @Instrumentable, like @Instrumentable(viaPort = 8081). Once parsed, Selendroid server(s) will be hooked to these ports and you hook your WebDriver instances injected from Drone into the test as well just to them. With this, you can even test multiple Android applications simultaneously with multiple deployments. I am considering this as the final destination where I want to be with the deployment possibilities.</p>
+</div>
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_conclusion">Conclusion</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>I am looking forward to get it into Maven Central so it will be (finally) publicly available. After multiple deployment feature which is currently under development (native extension is refactored because of that quite heavily), I would like to help in Aearogear project where I would bring Droidium on the scene. We are doing some testing on Aerogear as well and some areas are not covered. Droidium should fill this gap. The next thing is to polish the code as such, mostly unify the logging. I strongly believe that Droidium will be released before the end of GSoC.</p>
+</div>
+<div class="paragraph">
+<p>I have to say that it is actually quite fun and I love doing this in its entirety. The one big lesson I got while developing this is that no matter how safe time plans you have, almost everything will take you more time you though it would and everything is more complicated at it seems for the first time. Secondly, every action takes some reaction and more open you are more good things will happen to you. Last but not least, it seems to me open source environment just changes everything and the openness is the thing which drives us all. The more I give, the more I get back.</p>
+</div>
+
+</div>
+</div>
+<div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_shortname = 'gsoc2013-arquillian-android';
+
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+  </div>
+
+  <div id="sidebar">
+    <h2>Categories</h2>
+    <ul>
+<li><a href="../../../tags/gsoc">gsoc (4)</a></li>
+    </ul>
+
+    <h2>Archive</h2>
+    <ul>
+<li><a href="../../../2013/08">August 2013 (1)</a></li>
+<li><a href="../../../2013/07">July 2013 (2)</a></li>
+<li><a href="../../../2013/06">June 2013 (2)</a></li>
+    </ul>
+
+    <h2>Links</h2>
+    <ul>
+<li><a href="https://github.com/smiklosovic/blog-gsoc">This on GitHub</a></li>
+    </ul>
+  </div>
+
+  <div id="footer">
+    Copyright &copy; 2013 Stefan Miklosovic.
+    Powered by <a href="http://blaze.blackened.cz/">BlazeBlogger</a>.
+  </div>
+</div>
+
+</body>
+</html>
