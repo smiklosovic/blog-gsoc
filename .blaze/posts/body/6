@@ -1,0 +1,195 @@
+<div class="paragraph">
+<p>The last blog regarding of GSoC 2013 is out! I will evaluate the whole project
+and add some insights for the future. Lets check it!</p>
+</div>
+<!-- break -->
+<div class="sect1">
+<h2 id="_the_end">The end</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>So here we are. Arquillian Droidium 1.0.0.Alpha1 is out. You can grab it from Maven Central
+or you can build it from sources at GitHub.</p>
+</div>
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_multiple_deloyments_and_instrumentation">Multiple deloyments and instrumentation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This section will be little bit technical and do not be sad if you do not understand it in its depth. There
+are some Arquillian core and Arquillian Drone technicalities which an ordinary user does not have to know but
+you are free to check it out. I would like to describe event model and whole idea behind multiple deployments
+and instrumentation feature and what does that implies for us.</p>
+</div>
+<div class="sect2">
+<h3 id="_selendroid_server">Selendroid server</h3>
+<div class="paragraph">
+<p>When I say <em>to instrument a package</em> I mean to modify Selendroid server from Selendroid project to reflect
+the application under the test - our APK we need to test. The logic behind Selendroid server is very simple.
+After you install unmodified AUT (application under test) APK to your Android device, in order to be able to test it with WebDriver
+API, you need to install there Selendroid server.</p>
+</div>
+<div class="paragraph">
+<p>Selendroid server is the only component which needs to be rebuilt dynamically upon every test execution because
+you need to rewrite its AndroidManifest.xml to say Android that when you execute instrumentation, you are going to
+instrument your AUT. To be totally precise, you have to take raw Selendroid server and rewrite <a href="https://github.com/selendroid/selendroid/blob/0.5.1/selendroid-server/AndroidManifest.xml#L6">this line</a> where you need to rewrite <code>android:targetPackage</code> to reflect the name of the package you want to instrument.</p>
+</div>
+<div class="paragraph">
+<p>Once done, after Selendroid server is rebuilt in such way and Selendroid server is installed (with AUT APK), you are free to execute instrumentation on Android device directly.</p>
+</div>
+
+</div>
+<div class="sect2">
+<h3 id="_how_to_run_instrumentation">How to run instrumentation?</h3>
+<div class="paragraph">
+<p>When you want to execute instrumentation, what it really means is that you need to execute one command in a format like this:
+<code>am insrument -e main_activity _name_ io.selendroid/.ServerInstrumentation</code>. <code>main_activity</code> switch specifies which activity you want to start. This activity
+is the activity located in AUT APK. The last argument specifies the class which performs the instrumentation itself. In our case it is the class from rebuilt Selendroid server. The part before slash specifies the server base package, the part after slash the class name. If the prefix of class name matches the base package, you can abbreviate it like that. These package names do not have to be necessarilly the same.</p>
+</div>
+<div class="paragraph">
+<p><code>main_class</code> switch propagates to Selendroid server itself and activity you specified is automatically started for you when you execute that command. Simple server is started and it listens to calls from client (from your test) via WebDriver REST calls.</p>
+</div>
+
+</div>
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_to_run_multiple_instrumentations">How to run multiple instrumentations?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>I have spent a lot of time on this since you have to avoid some problems which were needed to be investigated firstly. The problem with multiple instrumentation is that when you have one instance of Selendroid server package, you can instrument only one target package (<code>android:targetPackage</code>) (so only one AUT APK deployment) so you can not just add more <code>instrumentation</code> elements into Selendroid server manifest upon its rebuilding. It is not so simple. Instead of that, what you have to do is to install another instance of Selendroid server. This is the thing which can not be avoided and it is the specific of Android as such.</p>
+</div>
+<div class="paragraph">
+<p>The first problem with the installation of another instance of Selendroid server is that you can not install the package with the same name twice. The name of the package is the value of <code>package</code> argument in <code>manifest</code> element as <a href="https://github.com/selendroid/selendroid/blob/0.5.1/selendroid-server/AndroidManifest.xml#L2">shown here</a>. The solution is that you need to generate the name of Selendroid server dynamically so multiple installations will not clash.</p>
+</div>
+<div class="paragraph">
+<p>The second problem with the multiple instrumentation is with the port binding. When you installed Selendroid server on an emulator, it was bound to port 8080 automatically and you could not change that port in any way. It was wired into the server. This resulted into the fact that when you installed the second Selendroid server, it could not be bound to 8080 since there was already such binding - from the first server.</p>
+</div>
+<div class="paragraph">
+<p>So I implemented this multiple Selendroid port binding directly to Selendroid server in upstream <a href="https://github.com/selendroid/selendroid/pull/90">here</a>. So from now on, you can install more then one Selendroid server on one device, every server is bound to different port and every server has different name. Now when you want to execute instrumentation, you are executing it like <code>am instrument -e main_activty _name_ -e server_port _port_ io.selendroid_number/io.selendroid.ServerInstrumentaion</code>. One remark here - for every installation of server there is unique package name, e.g. io.selendroid_1, io.selendroid_2 and so on. You can not use abbreviated name of the instrumentation class because the prefixes do not match anymore. For the ServerInstrumentation class, you have to use its FQDN.</p>
+</div>
+<div class="sect2">
+<h3 id="_multiple_instrumentable_deployments">Multiple (instrumentable) deployments</h3>
+<div class="paragraph">
+<p>And this is the place where Arquillian comes to play. From the Arquillian test case point of view, you need to match <code>@Deployment</code>'s with instrumentations which is to say what deployment you want to instrument matches the right WebDriver instance via which you will operate on that particular deployment. As already known, you can install Android APKs as ordinary JavaArchives because ShrinkWrap does not care at all. It sees just ordinary JavaArchive. The only new thing you need to put to your <code>@Deployment</code> is the annotation called <code>@Instrumentable</code>. If you put it on your <code>@Deployment</code>, you are telling Arquillian that this is the deployment you want to instrument which in turn means that there will be Selendroid server installed for you in the background automatically, it will be rebuilt to reflect that deployed APK, it will be installed on the device and so on. Remember, once you put <code>@Instrumentable</code> on <code>@Deployment</code>, there is one Selendroid server installed.</p>
+</div>
+<div class="paragraph">
+<p>You can of course instrument more then one depoyment. As already said, every deployment will be backed with different instance of Selendroid server which fits AUT APK. Since you have to hook Selendroid server to unique port, you have to provide one argument to <code>@Instrumentable</code> annotation called <code>viaPort</code>. It tells to which port on Android device the particular instance of Selendroid server for that concrete <code>@Deployment</code> will be bound.</p>
+</div>
+<div class="paragraph">
+<p>When you do not want to instrument a package, just do not put <code>@Instrumentable</code> annotation on its <code>@Deployment</code> method. It will be installed just as is and uninstalled afterwards.</p>
+</div>
+<div class="paragraph">
+<p>The logic for this instrumentable annotation stuff is located in <a href="https://github.com/arquillian/arquillian-droidium/blob/1.0.0.Alpha1/droidium-native/arquillian-droidium-native-impl/src/main/java/org/arquillian/droidium/native_/instrumentation/DeploymentInstrumentationResolver.java">DeploymentInstrumentationResolver</a> in native plugin. We map instrumentation configurations to deployment names from a test class.</p>
+</div>
+
+</div>
+<div class="sect2">
+<h3 id="_when_drone_comes_to_play">When Drone comes to play</h3>
+<div class="paragraph">
+<p>Up to this point, you have installed all deployments and you know what deployments will be instrumented. When you have one Selendroid server which instruments one deployment, you need to have one WebDriver instance injected into test itself from Drone. When you have multiple deployments, you have multiple Selendroid servers which have to be controlled by multiple WebDriver instances, every instance for every Selendroid server.</p>
+</div>
+<div class="paragraph">
+<p>It is possible to specify not only one WebDriver instance from Drone point of view. The configuration of multiple Drone instances takes two steps. The first step is to configure it in <code>arquillian.xml</code>. Lets ellaborate it <a href="https://github.com/arquillian/arquillian-droidium/blob/1.0.0.Alpha1/tests/droidium-native-01/src/test/resources/arquillian.xml#L37">on this</a>. There are two Drone / WebDriver extensions with different qualifiers and different ports on which they listen to Android. The part after a dash in extension qualifier for Drone says that you need to put the annotation of the same name on the WebDriver instance injected into the test. (e.g. in our case <code>@Drone @Selendroid WebDriver driver1</code> or <code>@Drone @Aerogear</code> respectively).</p>
+</div>
+<div class="paragraph">
+<p>When you have said what <code>@Deployment</code> is instrumented via what port, in order to be able to control that deployment (so that AUT APK) via some particular WebDriver instance, you need to map instrumentable deployments to extension qualifiers in <code>arquillian.xml</code>. Ask yourself: what kind of information is the only one which have instrumentable deployments and Drone extensions in common? Give me some drums here &#8230;.. ports!</p>
+</div>
+<div class="paragraph">
+<p>Yeah! That&#8217;s right. Instrumentation port in <code>@Instrumentable</code> and deployment name is mapped to port specified in <code>remoteAddress</code> for some particular WebDriver instance. Note that there are defaults when you ommit this. All possible checking of the sanity of the configuration is done very carefully. The rule of thumb: add Drone extension to <code>arquillian.xml</code>, specify <code>remoteAddress</code> there with the port. Put <code>@Instrumentable</code> on <code>@Deployment</code> you want to instrument with that WebDriver and add <code>viaPort</code> argument to it to match the port in Drone extension (8080 is default when omitted). In case of multiple instrumented @Deployments, besides @Instrumentable on them, you have to put custom annotations to injected <code>@Drone</code> instances to match these Drones with multiple Drone extension configurations in arquillian.xml.</p>
+</div>
+
+</div>
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_to_switch_between_activities_then">How to switch between activities then?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Very valid question. When you remember right, every WebDriver instance operates just on one instrumentable <code>@Deployment</code> so you can not use one WebDriver to operate on another deployment and vice versa. Additionally, the problem with Selendroid server is that when you specify <code>-e main_class</code>, that activity class is automatically started when WebDriver is firsty initialized so when you have two WebDriver instances, even you have not started to test anything, two activities are started and displayed to you. That is kind of ugly.</p>
+</div>
+<div class="paragraph">
+<p>The solution to this is simple stupid. You just do not let Selendroid (so WebDriver upon its initialization) to start that activity. You just put empty string as the <code>main_class</code> name. You have to start the activities <em>upon request</em>.</p>
+</div>
+<div class="paragraph">
+<p>The starting of activities is the task of <a href="https://github.com/arquillian/arquillian-droidium/blob/1.0.0.Alpha1/droidium-native/arquillian-droidium-native-impl/src/main/java/org/arquillian/droidium/native_/activity/NativeActivityManager.java">activity manager</a>. After Android device is injected into test as <code>@ArquillianResource</code>, you can start them <a href="https://github.com/arquillian/arquillian-droidium/blob/1.0.0.Alpha1/tests/droidium-native-01/src/test/java/org/arquillian/droidium/showcase/native_/test01/SelendroidTestAppTestCase.java#L84">like this</a>. The trick is that when you install some <code>@Deployment</code>, that deployment is automatically scanned before it is installed to parse all activity names in that APK from xmltree of its AndroidManifest.xml so in the end you know that when you want to start that activity, it belongs to some deployment which is in turn mapped to instrumentation which is in turn mapped to extension in arquillian.xml so you have the very right WebDriver instance which is connected to the right Selendroid server which instruments the right APK package where that activity you want to start is located. An activty can be started with WebDriver automatically, it is simple call like <code>driver.get("and-activity://" + activity);</code>.</p>
+</div>
+<div class="paragraph">
+<p>Activity manager is implemented as a service via SPI. When you do not use native plugin, default manager will be used which will start activities natively.</p>
+</div>
+<div class="sect2">
+<h3 id="_event_model">Event model</h3>
+<div class="paragraph">
+<p>is kind of hack. But it indeed does make sense after the explanation. I prepared <a href="http://miklosovic.net/event-model.html">this event tree</a> from Arquillian when some test run. Please open it up and follow it with this blog.</p>
+</div>
+<div class="paragraph">
+<p>In BeforeSuite, you start the container and after it is started, native plugin gets hooked where all resources are created to be able to inject them into classes in order to have less spaghetti like code. I have to say that without using DI I can hardly imagine how the upcomming logic would be implemented. DI rules.</p>
+</div>
+<div class="paragraph">
+<p>In BeforeClass, there is Karel Piwko&#8217;s <code>DroneConfigurator</code> which prepares global Drone configuration with the precedence 10 on BeforeClass. I have to put my <code>DeploymentInstrumentationResolver</code> with higher precedence since I <em>really</em> need to resolve that mapping firstly. The reason behind this is that otherwise I do not have any guarantee when that resolver will be treated and it can be <em>to late</em>, e.g. when the instantiation of class scoped Drone is performed, I already need that to be resolved which could not be the case.</p>
+</div>
+<div class="paragraph">
+<p>With the new event model of Karel&#8217;s Drone, it is important to realize that there is not the instance of WebDriver before it is really used in the test itself. There is <code>Callable</code> which is called upon its first usage so it is the instance in the first test method (in Before). The configuration and the instantiation of Drone are two different things. The configuration of some Drone is hooked to BeforeClass so after it is configured from underlying arquillian.xml, I hooked my <code>ExtensionDroneResolver</code>.</p>
+</div>
+<div class="paragraph">
+<p>Then deployment logic comes. Android container does not deploy anything on its own. The deployment is executed by native plugin. All the container does is that it fires <code>AndroidDeploy</code> observed in <code>AndroidDeploymentInstaller</code>. After it is actually installed on the device, that deployment is scanned for the presence of activities by <code>ActivityDeploymentScanner</code>.</p>
+</div>
+<div class="paragraph">
+<p>It is important to realize that there is not any guarantee when some Drone is configured. It could be configured before some deployment is deployed or after it.</p>
+</div>
+<div class="paragraph">
+<p>The real fun starts when Drone is about to make the actual instance of WebDriver&#8217;s Callable. It is done in the first <code>Before</code>. I hooked my <code>InstrumentationPerformDecider</code> on every <code>BeforeDroneInstantiated</code>. If this wanna-be WebDriver instance is meant to be used with some instrumentable deployment, I <code>PerformInstrumentation</code> which basically means Selendroid server is rebuilt to reflect instrumentable deployment.</p>
+</div>
+<div class="paragraph">
+<p>Selendroid server is installed only when it is needed and the decision is made before Drone is instantiated. On the background, there is the instrumentation command executed on Android device <em>with empty main class</em> so even Selendroid server does instrument APK, no activity class is started yet. Instead of that, I take <code>DroidiumNativeActivityManager</code> to map activities to WebDriver instances so once I start them, I have the right WebDriver instance for some deployment where activities I can start with that WebDriver are located. The similar approach is done in method scoped Drones.</p>
+</div>
+<div class="paragraph">
+<p>When tests are done and all needs to be uninstalled, I <em>have to</em> observe <code>AfterDroneDestroyed</code> to remove Selendroid server from the Android device. The reason I <em>have to</em> do it after Drone is destructed is that it internally calls <code>quit()</code> method and since I have remote WebDriver, that call is sent to Selendroid which has to be there to listen to it. If I removed Selendroid server before Drone is destructed, it would end up with failure since WebDriver is not able to communicate with Selendroid anymore upon its destruction to call that <code>quit()</code>.</p>
+</div>
+<div class="paragraph">
+<p>Lastly, I can not uninstall Android packages in ordinary undeployment logic. If I uninstalled Android packages before Drones are destroyed (so Selendroid server instrumentation is closed), after uninstalling Android package which is instrumented by Selendroid, Android would kill Selendroid server as well which would ended up with the impossibility to destroy Drone instances since it relies on the presence of Selendroid server to call that <code>quit()</code> but it is already killed.</p>
+</div>
+<div class="paragraph">
+<p>Uninstallation of Android packages is done in <code>AndroidDeploymentUninstaller</code>. There is nothing more to uninstall since all Selendroid servers were uninstalled upon Drone destruction. Once again I need to be sure this will be treated lastly in <code>AfterClass</code> when all method scoped Drones are finished.</p>
+</div>
+
+</div>
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_let_tests_speak_for_themselves">Let tests speak for themselves</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>There is plenty of tests which demonstrate just said. Please find them <a href="https://github.com/arquillian/arquillian-droidium/tree/1.0.0.Alpha1/tests">here</a>.</p>
+</div>
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_what_next">What next</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>There is the last scenario which I would like to implement and it is the possibility to deploy APK to Android, WAR to JBoss AS, Android deployment would be instrumented and since you have two WebDrivers, one for web app, one for native app, you can test scenarios when action in mobile phone fires some action in web browser and vice versa. Imagine one time password. You register on the web site, you have otp client on mobile phone, you try to log in so token is sent to your mobile, you read that token (by one WebDriver + native plugin) and you pass it to web browser (another WebDriver).</p>
+</div>
+<div class="paragraph">
+<p>The thing is that I need to implement my Android protocol which is on the way. (It is acutally done, I&#8217;ll add it to Alpha2).</p>
+</div>
+<div class="paragraph">
+<p>By having this protocol you can test scenarios where you have native APK test which somehow communicates with web application deployed in JBoss AS container. Is there some other combination you would like to test and you can not? :)</p>
+</div>
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_what_else_to_say">What else to say</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Wow &#8230; It was amazing experience to do this really. I am really grateful to Aslak Knutsen and Karel Piwko as well as Dan Allen for their community and project management and leadership. It was wonderful summer. I regret I do not have the status of student anymore, I would totally do this once again :).</p>
+</div>
+
+</div>
+</div>

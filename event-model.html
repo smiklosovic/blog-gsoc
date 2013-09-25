@@ -1,0 +1,558 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0046)file:///tmp/zim-smikloso/print-to-browser.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		
+		<title>event-model</title>
+		<meta name="Generator" content="Zim 0.60">
+		<style type="text/css">
+			a          { text-decoration: none      }
+			a:hover    { text-decoration: underline }
+			a:active   { text-decoration: underline }
+			strike     { color: grey                }
+			u          { text-decoration: none;
+			             background-color: yellow   }
+			tt         { color: #2e3436;            }
+			pre        { color: #2e3436;
+			             margin-left: 20px          }
+			h1         { text-decoration: underline;
+			             color: #4e9a06             }
+			h2         { color: #4e9a06             }
+			h3         { color: #4e9a06             }
+			h4         { color: #4e9a06             }
+			h5         { color: #4e9a06             }
+		</style>
+	</head>
+	<body>
+
+<!-- Wiki content -->
+
+<p>
+(E) ManagerProcessing<br>
+</p><div style="padding-left: 30pt">
+(O) LoadableExtensionLoader.load<br>
+(E) ServiceLoader<br>
+</div>
+(E) ManagerStarted<br>
+<div style="padding-left: 30pt">
+(O) ConfigurationRegistrar.loadConfiguration<br>
+(E) ArquillianDescriptor<br>
+</div>
+<div style="padding-left: 60pt">
+(O) ProtocolRegistryCreator.createRegistry<br>
+(E) ProtocolRegistry<br>
+(O) MultipleContainerRegistryCreator.createRegistry<br>
+(E) ContainerRegistry<br>
+</div>
+<p></p>
+
+
+<h1>(E) BeforeSuite</h1>
+<p>
+</p><div style="padding-left: 30pt">
+(I) TestContextHandler.createSuiteContext<br>
+(O) DroidiumNativeConfigurator.configureDroidiumNative<br>
+(E) DroidiumNativeConfiguration<br>
+(E) DroidiumNativeConfigured<br>
+(O) ContainerEventController.execute<br>
+(E) ContainerMultiControlEvent<br>
+</div>
+<div style="padding-left: 60pt">
+(O) ClientContainerControllerCreator.createClientSideContainerController<br>
+(E) ContainerController<br>
+(O) ContainerLifecycleController.setupContainers<br>
+(E) SetupContainer<br>
+</div>
+<div style="padding-left: 90pt">
+(I) ContainerDeploymentContextHandler.createContainerContext<br>
+(O) ContainerLifecycleController.setupContainer<br>
+(E) BeforeSetup<br>
+(E) Container<br>
+(E) ContainerConfiguration<br>
+(E) AndroidSDK<br>
+(E) IdentifierGenerator<br>
+(E) ProcessExecutor<br>
+(E) AfterSetup<br>
+</div>
+<div style="padding-left: 60pt">
+(O) ClientDeployerCreator.createClientSideDeployer<br>
+(E) Deployer<br>
+</div>
+<div style="padding-left: 30pt">
+(E) ContainerMultiControlEvent<br>
+</div>
+<div style="padding-left: 60pt">
+(O) ContainerLifecycleController.startSuiteContainers<br>
+(E) <strong>StartContainer</strong><br>
+</div>
+<div style="padding-left: 90pt">
+(I) ContainerDeploymentContextHandler.createContainerContext<br>
+(O) ContainerLifecycleController.startContainer<br>
+(E) BeforeStart<br>
+(E) AndroidContainerStart<br>
+</div>
+<div style="padding-left: 120pt">
+(O) AndroidBridgeConnector.initAndroidDebugBridge<br>
+(E) AndroidBridge<br>
+(E) AndroidBridgeInitialized<br>
+</div>
+<div style="padding-left: 150pt">
+(O) AndroidDeviceSelectorImpl.selectDevice<br>
+(E) AndroidDevice<br>
+(E) Screenshooter<br>
+(E) AndroidDeviceReady<br>
+</div>
+<div style="padding-left: 180pt">
+(O) AndroidDeployableContainer.onDeviceReady<br>
+(O) AndroidLogInitializer.initAndroidLog<br>
+(E) LogcatHelper<br>
+(E) LogcatReader<br>
+</div>
+<div style="padding-left: 90pt">
+(E) <strong>AfterStart</strong><br>
+</div>
+<div style="padding-left: 120pt">
+(O) DroidiumNativeResourceManager.<strong>onAfterContainerStart</strong><br>
+(E) AndroidApplicationHelper<br>
+(E) ActivityDeploymentMapper<br>
+(E) ActivityWebDriverMapper<br>
+(E) ExtensionDroneMapper<br>
+(E) DeploymentWebDriverMapper<br>
+(E) DeploymentInstrumentationMapper<br>
+(E) APKSigner<br>
+(E) AndroidApplicationManager<br>
+(E) SelendroidServerManager<br>
+(E) SelendroidRebuilder<br>
+(E) AndroidDeploymentRegister<br>
+(E) SelendroidDeploymentRegister<br>
+</div>
+<div style="padding-left: 30pt">
+(O) ReusableRemoteWebDriverExtension.initialize<br>
+(E) ReusedSessionPernamentStorage<br>
+(E) ReusedSessionStore<br>
+(E) InitializationParametersMap<br>
+(O) BrowserCapabilitiesRegistrar.register<br>
+(E) BrowserCapabilitiesRegistry<br>
+(O) DroneRegistrar.register<br>
+(E) DroneRegistry<br>
+</div>
+<p></p>
+
+
+<h1>(E) BeforeClass</h1>
+<p>
+</p><div style="padding-left: 30pt">
+(I) TestContextHandler.createSuiteContext<br>
+(I) TestContextHandler.createClassContext<br>
+(E) TestClass<br>
+<strong>(O) DeploymentInstrumentationResolver.resolveInstrumentationDeploymentMap &lt;- resolves DeploymentInstrumentationMapper                                     precedence = 20 </strong><br>
+</div>
+<div style="padding-left: 150pt">
+<strong>maps deployment names to InstrumentationConfiguration (deployment name to port in @Instrumentable(viaPort=_number_)</strong><br>
+</div>
+<div style="padding-left: 30pt">
+(O) DroneConfigurator.prepareGlobalDroneConfiguration                                                                                                                                                              &gt; precendence = 10<br>
+(E) DroneContext<br>
+(E) DroneConfigurationEvent<br>
+(E) DroneConfigurationEvent<br>
+</div>
+<div style="padding-left: 60pt">
+(O) ExtensionDroneResolver.onAfterDroneConfigured<br>
+(E) BeforeExtensionDroneMapping<br>
+(O) DroneCallableCreator.createDroneCallable<br>
+(E) DroneLifecycleEvent<br>
+(E) DroneLifecycleEvent<br>
+</div>
+<div style="padding-left: 30pt">
+(O) ContainerEventController.execute<br>
+(E) ContainerMultiControlEvent<br>
+</div>
+<div style="padding-left: 60pt">
+(O) ContainerLifecycleController.startClassContainers<br>
+</div>
+<div style="padding-left: 30pt">
+(E) Event<br>
+</div>
+<div style="padding-left: 60pt">
+(O) DeploymentGenerator.generateDeployment<br>
+(E) DeploymentScenario<br>
+</div>
+<div style="padding-left: 30pt">
+(E) ContainerMultiControlEvent<br>
+</div>
+<div style="padding-left: 60pt">
+(O) ContainerDeployController.deployManaged<br>
+(E) <strong>DeployDeployment</strong><br>
+</div>
+<div style="padding-left: 90pt">
+(I) ContainerDeploymentContextHandler.createContainerContext<br>
+(I) ContainerDeploymentContextHandler.createDeploymentContext<br>
+(I) DeploymentExceptionHandler.verifyExpectedExceptionDuringDeploy<br>
+(O) ContainerDeployController.deploy<br>
+(E) DeploymentDescription<br>
+(E) Deployment<br>
+(E) BeforeDeploy<br>
+</div>
+<div style="padding-left: 120pt">
+(O) ArchiveDeploymentToolingExporter.export<br>
+(O) ArchiveDeploymentExporter.callback<br>
+</div>
+<div style="padding-left: 90pt">
+(E) <strong>AndroidDeploy</strong><br>
+</div>
+<div style="padding-left: 120pt">
+(O) <strong>AndroidDeploymentInstaller.onAndroidDeployArchive</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&gt; installs Android Deployment (APK)<br>
+(E) <strong>BeforeAndroidDeploymentDeployed</strong><br>
+(E) <strong>AfterAndroidDeploymentDeployed</strong><br>
+</div>
+<div style="padding-left: 150pt">
+(O) <strong>ActivityDeploymentScanner.onAndroidDeploymentDeployed                           -&gt; maps activities to just installed deployment              ActivityDeploymentMapper</strong><br>
+(E) <strong>BeforeAndroidDeploymentScanned</strong><br>
+(E) <strong>AfterAndroidDeploymentScanned</strong><br>
+</div>
+<div style="padding-left: 90pt">
+(E) ProtocolMetaData<br>
+(E) AfterDeploy<br>
+</div>
+<div style="padding-left: 60pt">
+(E) <strong>DeployDeployment</strong><br>
+</div>
+<div style="padding-left: 90pt">
+(I) ContainerDeploymentContextHandler.createContainerContext<br>
+(I) ContainerDeploymentContextHandler.createDeploymentContext<br>
+(I) DeploymentExceptionHandler.verifyExpectedExceptionDuringDeploy<br>
+(O) ContainerDeployController.deploy<br>
+(E) DeploymentDescription<br>
+(E) Deployment<br>
+(E) BeforeDeploy<br>
+</div>
+<div style="padding-left: 120pt">
+(O) ArchiveDeploymentToolingExporter.export<br>
+(O) ArchiveDeploymentExporter.callback<br>
+</div>
+<div style="padding-left: 90pt">
+(E) <strong>AndroidDeploy</strong><br>
+</div>
+<div style="padding-left: 120pt">
+<strong>(O) AndroidDeploymentInstaller.onAndroidDeployArchive</strong><br>
+</div>
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(E) BeforeAndroidDeploymentDeployed</strong><br>
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(E) AfterAndroidDeploymentDeployed</strong><br>
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(O) ActivityDeploymentScanner.onAndroidDeploymentDeployed			      -&gt; maps activities to just installed deployment                ActivityDeploymentMapper</strong><br>
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(E) BeforeAndroidDeploymentScanned</strong><br>
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(E) AfterAndroidDeploymentScanned</strong><br>
+<div style="padding-left: 90pt">
+(E) ProtocolMetaData<br>
+(E) AfterDeploy<br>
+</div>
+<div style="padding-left: 30pt">
+(O) DroneConfigurator.prepareDroneConfiguration<br>
+(E) DroneConfigurationEvent<br>
+(E) DroneConfigurationEvent<br>
+</div>
+<div style="padding-left: 60pt">
+(O) <strong>ExtensionDroneResolver.onAfterDroneConfigured                                                                 -&gt; class scoped Drones after the configuration</strong><br>
+(E) BeforeExtensionDroneMapping<br>
+(E) <strong>AfterExtensionDroneMapping</strong><br>
+</div>
+<div style="padding-left: 90pt">
+(O) <strong>DeploymentWebDriverResolver.resolveDeploymentWebDriverMap</strong><br>
+</div>
+<div style="padding-left: 60pt">
+(O) DroneCallableCreator.createDroneCallable<br>
+(E) DroneLifecycleEvent<br>
+(E) DroneLifecycleEvent<br>
+</div>
+<div style="padding-left: 30pt">
+(O) ContainerRestarter.restart<br>
+(O) ClientBeforeAfterLifecycleEventExecuter.on<br>
+</div>
+<p></p>
+
+
+<h1>(E) Before (the first test method, class scoped drone)</h1>
+<p>
+</p><div style="padding-left: 30pt">
+(I) TestContextHandler.createSuiteContext<br>
+(I) TestContextHandler.createClassContext<br>
+(E) TestClass<br>
+(I) TestContextHandler.createTestContext<br>
+(I) ContainerEventController.createBeforeContext<br>
+(O) TestInstanceEnricher.enrich<br>
+(E) BeforeEnrichment<br>
+</div>
+<div style="padding-left: 60pt">
+(E) DroneLifecycleEvent  -&gt; <strong>BeforeDroneInstantiated</strong><br>
+</div>
+<div style="padding-left: 90pt">
+<strong>(O) InstrumentationPerformDecider.decidePerformingInstrumentation </strong><br>
+    <strong>-&gt; uses ExtensionDroneMapper and DeploymentWebDriverMapper</strong><br>
+      <strong>(ExtensionDroneMapper maps extensionQualifier to Drone config)</strong><br>
+      <strong>(DeploymentWebDriverMapper maps deployment name to extensionQualifier)</strong><br>
+i take qualifier from event and i match it to the extension qualifier and i get deployment which is controlled by some Drone							<br>
+</div>
+<div style="padding-left: 60pt">
+<strong>(E) BeforeInstrumentationPerformed</strong><br>
+</div>
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(E) PerformInstrumentation</strong><br>
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(O) InstrumentationPerformer.performInstrumentation</strong><br>
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(E) BeforeInstrumentationPerformed</strong><br>
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(E) SelendroidDeploy</strong><br>
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(O) SelendroidDeploymentInstaller.onSelendroidDeploy</strong><br>
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(E) BeforeSelendroidDeploymentDeployed</strong><br>
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(E) AfterSelendroidDeploymentDeployed</strong><br>
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(E) AfterInstrumentationPerformed</strong><br>
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(E) AfterInstrumentationPerformed</strong><br>
+<div style="padding-left: 60pt">
+(O) DroneInstanceCreator.createDroneInstance -&gt; az tu je Drone vytvoreny takze moze komunikovat so Selendroid serverom<br>
+(E) DroneLifecycleEvent<br>
+</div>
+<div style="padding-left: 90pt">
+(O) DroneEnhancer.enhanceDrone<br>
+(O) <strong>DroidiumNativeActivityManager.addAllActitiviesForDrone -&gt; AfterDroneInstantiated -&gt; add all activities which this Drone controls to ActivityDeploymentMapper</strong><br>
+</div>
+<div style="padding-left: 30pt">
+(E) AfterEnrichment<br>
+(O) DroneConfigurator.configureDrone<br>
+(O) ClientBeforeAfterLifecycleEventExecuter.on<br>
+</div>
+(E) Test<br>
+<div style="padding-left: 30pt">
+(I) TestContextHandler.createSuiteContext<br>
+(I) TestContextHandler.createClassContext<br>
+(E) TestClass<br>
+(I) TestContextHandler.createTestContext<br>
+(I) ContainerEventController.createTestContext<br>
+(O) ClientTestExecuter.execute<br>
+(E) ExecutionEvent<br>
+</div>
+<div style="padding-left: 60pt">
+(O) LocalTestExecuter.execute<br>
+(E) TestResult<br>
+</div>
+(E) After<br>
+<div style="padding-left: 30pt">
+(I) TestContextHandler.createSuiteContext<br>
+(I) TestContextHandler.createClassContext<br>
+(E) TestClass<br>
+(I) TestContextHandler.createTestContext<br>
+(I) ContainerEventController.createAfterContext<br>
+(O) ClientBeforeAfterLifecycleEventExecuter.on<br>
+(O) DroneDestructor.destroyMethodScopedDrone<br>
+</div>
+<p></p>
+
+
+<h1>(E) Before (the second method)</h1>
+<p>
+</p><div style="padding-left: 30pt">
+(I) TestContextHandler.createSuiteContext<br>
+(I) TestContextHandler.createClassContext<br>
+(E) TestClass<br>
+(I) TestContextHandler.createTestContext<br>
+(I) ContainerEventController.createBeforeContext<br>
+(O) TestInstanceEnricher.enrich<br>
+(E) BeforeEnrichment<br>
+(E) AfterEnrichment<br>
+(O) DroneConfigurator.configureDrone<br>
+(E) DroneConfigurationEvent<br>
+(E) DroneConfigurationEvent<br>
+</div>
+<div style="padding-left: 60pt">
+(O) ExtensionDroneResolver.onAfterDroneConfigured<br>
+(E) BeforeExtensionDroneMapping<br>
+(E) AfterExtensionDroneMapping<br>
+</div>
+<div style="padding-left: 90pt">
+(O) DeploymentWebDriverResolver.resolveDeploymentWebDriverMap<br>
+</div>
+<div style="padding-left: 60pt">
+(O) DroneCallableCreator.createDroneCallable<br>
+(E) DroneLifecycleEvent<br>
+(E) DroneLifecycleEvent<br>
+</div>
+<div style="padding-left: 30pt">
+(O) ClientBeforeAfterLifecycleEventExecuter.on<br>
+</div>
+<p></p>
+
+
+<h1>(E) Test                                                                                    -&gt; method scoped drone</h1>
+<p>
+</p><div style="padding-left: 30pt">
+(I) TestContextHandler.createSuiteContext<br>
+(I) TestContextHandler.createClassContext<br>
+(E) TestClass<br>
+(I) TestContextHandler.createTestContext<br>
+(I) ContainerEventController.createTestContext<br>
+(O) ClientTestExecuter.execute<br>
+(E) ExecutionEvent<br>
+</div>
+<div style="padding-left: 60pt">
+(O) LocalTestExecuter.execute<br>
+(E) DroneLifecycleEvent  -&gt; <strong>BeforeDroneInstantiated</strong><br>
+</div>
+<div style="padding-left: 90pt">
+<strong>(O) InstrumentationPerformDecider.decidePerformingInstrumentation</strong><br>
+</div>
+   <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(E) BeforeInstrumentationPerformed</strong><br>
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(E) PerformInstrumentation</strong><br>
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(O) InstrumentationPerformer.performInstrumentation</strong><br>
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(E) BeforeInstrumentationPerformed</strong><br>
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(E) SelendroidDeploy</strong><br>
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(O) SelendroidDeploymentInstaller.onSelendroidDeploy</strong><br>
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(E) BeforeSelendroidDeploymentDeployed</strong><br>
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(E) AfterSelendroidDeploymentDeployed</strong><br>
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(E) AfterInstrumentationPerformed</strong><br>
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(E) AfterInstrumentationPerformed</strong><br>
+<div style="padding-left: 90pt">
+(O) DroneInstanceCreator.createDroneInstance                                                    -&gt; WebDriver is up and can be used to communicate with matching Selendroid server instance<br>
+(E) DroneLifecycleEvent<br>
+</div>
+<div style="padding-left: 120pt">
+(O) DroneEnhancer.enhanceDrone<br>
+(O) <strong>DroidiumNativeActivityManager.addAllActitiviesForDrone -&gt; AfterDroneInstantiated</strong><br>
+</div>
+<div style="padding-left: 60pt">
+(E) TestResult<br>
+</div>
+<p></p>
+
+
+<h1>(E) After</h1>
+<p>
+</p><div style="padding-left: 30pt">
+(I) TestContextHandler.createSuiteContext<br>
+(I) TestContextHandler.createClassContext<br>
+(E) TestClass<br>
+(I) TestContextHandler.createTestContext<br>
+(I) ContainerEventController.createAfterContext<br>
+(O) ClientBeforeAfterLifecycleEventExecuter.on<br>
+(O) DroneDestructor.destroyMethodScopedDrone<br>
+(E) DroneLifecycleEvent<br>
+</div>
+<div style="padding-left: 60pt">
+(O) DroneEnhancer.deenhanceDrone<br>
+(O) DroidiumNativeActivityManager.removeAllActivitiesForDrone<br>
+</div>
+<div style="padding-left: 30pt">
+(E) DroneLifecycleEvent<br>
+</div>
+<div style="padding-left: 60pt">
+<strong>(O) InstrumentationRemoveDecider.decideRemovingInstrumentation                          -&gt; after Drone is destroyed, uninstall Selendroid server</strong><br>
+</div>
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(E) SelendroidUndeploy</strong><br>
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(O) SelendroidDeploymentUninstaller.onSelendroidUndeploy</strong><br>
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(E) BeforeSelendroidDeploymentUndeployed</strong><br>
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(E) AfterSelendroidDeploymentUndeployed</strong><br>
+<p></p>
+
+<h1>(E) AfterClass</h1>
+<p>
+</p><div style="padding-left: 30pt">
+(I) TestContextHandler.createSuiteContext<br>
+(I) TestContextHandler.createClassContext<br>
+(E) TestClass<br>
+(O) ClientBeforeAfterLifecycleEventExecuter.on<br>
+(O) ContainerEventController.execute<br>
+(E) ContainerMultiControlEvent <strong>lets say we have two instrumentable deployments here</strong><br>
+</div>
+<div style="padding-left: 60pt">
+(O) ContainerDeployController.undeployManaged<br>
+<strong>(E) UnDeployDeployment               -&gt; does nothing</strong><br>
+</div>
+<div style="padding-left: 90pt">
+(I) ContainerDeploymentContextHandler.createContainerContext<br>
+(I) ContainerDeploymentContextHandler.createDeploymentContext<br>
+(O) ContainerDeployController.undeploy<br>
+(E) BeforeUnDeploy<br>
+(E) AndroidUndeploy<br>
+(E) AfterUnDeploy<br>
+</div>
+<div style="padding-left: 60pt">
+<strong>(E) UnDeployDeployment               -&gt; does nothing</strong><br>
+</div>
+<div style="padding-left: 90pt">
+(I) ContainerDeploymentContextHandler.createContainerContext<br>
+(I) ContainerDeploymentContextHandler.createDeploymentContext<br>
+(O) ContainerDeployController.undeploy<br>
+(E) BeforeUnDeploy<br>
+(E) AndroidUndeploy<br>
+(E) AfterUnDeploy<br>
+</div>
+<div style="padding-left: 30pt">
+(E) ContainerMultiControlEvent<br>
+</div>
+<div style="padding-left: 60pt">
+(O) ContainerLifecycleController.stopManualContainers<br>
+</div>
+<div style="padding-left: 30pt">
+(E) ContainerMultiControlEvent<br>
+</div>
+<div style="padding-left: 60pt">
+(O) ContainerLifecycleController.stopClassContainers<br>
+</div>
+<div style="padding-left: 30pt">
+(O) DroneDestructor.destroyClassScopedDrone<br>
+(E) DroneLifecycleEvent<br>
+</div>
+<div style="padding-left: 60pt">
+(O) DroneEnhancer.deenhanceDrone<br>
+(O) DroidiumNativeActivityManager.removeAllActivitiesForDrone<br>
+</div>
+<div style="padding-left: 30pt">
+(E) DroneLifecycleEvent<br>
+</div>
+<div style="padding-left: 60pt">
+<strong>(O) InstrumentationRemoveDecider.decideRemovingInstrumentation</strong><br>
+</div>
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(E) SelendroidUndeploy</strong><br>
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(O) SelendroidDeploymentUninstaller.onSelendroidUndeploy</strong><br>
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(E) BeforeSelendroidDeploymentUndeployed</strong><br>
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(E) AfterSelendroidDeploymentUndeployed</strong><br>
+    <strong>(O) AndroidDeploymentUninstaller.onAndroidDeploymentUninstall              -&gt; AfterClass -100</strong><br>
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;(E) BeforeAllAndroidDeploymentsUndeployed</strong><br>
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;(E) BeforeAndroidDeploymentUndeployed</strong><br>
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;(E) AfterAndroidDeploymentUndeployed</strong><br>
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;(E) BeforeAndroidDeploymentUndeployed</strong><br>
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;(E) AfterAndroidDeploymentUndeployed</strong><br>
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;(E) AfterAllAndroidDeploymentsUndeployed</strong><br>
+<p></p>
+
+<h1>(E) AfterSuite</h1>
+<p>
+</p><div style="padding-left: 30pt">
+(I) TestContextHandler.createSuiteContext<br>
+(O) ContainerEventController.execute<br>
+(E) ContainerMultiControlEvent<br>
+</div>
+<div style="padding-left: 60pt">
+(O) ContainerLifecycleController.stopSuiteContainers<br>
+(E) StopContainer<br>
+</div>
+<div style="padding-left: 90pt">
+(I) ContainerDeploymentContextHandler.createContainerContext<br>
+(O) ContainerLifecycleController.stopContainer<br>
+(E) BeforeStop<br>
+</div>
+<div style="padding-left: 120pt">
+(O) <strong>DroidiumNativeResourceManager.onDroidiumContainerStop               -&gt; removes /tmp</strong><br>
+</div>
+<div style="padding-left: 90pt">
+(E) AndroidContainerStop<br>
+</div>
+<div style="padding-left: 120pt">
+(O) AndroidEmulatorShutdown.shutdownEmulator<br>
+</div>
+<div style="padding-left: 90pt">
+(E) AfterStop<br>
+</div>
+(E) ManagerStopping<br>
+<p></p>
+
+
+<!-- End wiki content -->
+
+	
+
+
+</body></html>
